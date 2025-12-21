@@ -3,7 +3,7 @@
 A Buget Friendly E-Commerce Website with clean UI and user friendly interface with aesthetic and modern Professional look
 
 **Where Elegance Meets Essence**  
-Discover timeless fragrances crafted with sophistication and artistry. Fawaz Fragrance brings curated, premium scents to fragrance lovers around the world — from classic elegance to modern boldness. :contentReference[oaicite:0]{index=0}
+Discover timeless fragrances crafted with sophistication and artistry. Fawaz Fragrance brings curated, premium scents to fragrance lovers around the world — from classic elegance to modern boldness.
 
 ---
 
