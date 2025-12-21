@@ -44,7 +44,7 @@ This project can be built using technologies such as:
 |-------|------------|
 | Frontend | Html5 / CSS / JS / React / Next.js / Vue.js |
 | Backend | Node.js / Express / Python Django |
-| Database | MongoDB / PostgreSQL / Nodejs
+| Database | MongoDB / PostgreSQL / 
 | Hosting | Vercel / Netlify / Hostinger / Github
 | Payments | WhatsApp integration / Custom checkout / PhonePay
 
