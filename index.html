@@ -1,0 +1,1958 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fawaz Fragrance | Where Elegance Meets Essence</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="Favicon.png" type="image/png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root{
+  --bg:#fff; --text:#111; --muted:#6b6b6b; --gold:#b99056; --accent:#0b0b0b;
+  --beige:#f5efe8; --card-shadow:0 8px 24px rgba(12,12,12,0.12); --max-width:1200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Lato,Arial,sans-serif;background:var(--beige);color:var(--text);-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* Navbar */
+.navbar{position:sticky;top:0;background:rgba(255,255,255,0.95);border-bottom:1px solid rgba(0,0,0,0.06);z-index:-1;padding:10px 16px}
+.nav-top{display:flex;align-items:center;justify-content:space-between;max-width:var(--max-width);margin:auto}
+.logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--accent)}
+.hamburger{display:none;flex-direction:column;cursor:pointer;gap:4px}
+.hamburger span{width:24px;height:3px;background:var(--accent);border-radius:2px}
+.search-mobile{margin:10px 0;display:flex;justify-content:center}
+.search-mobile input{width:100%;max-width:400px;padding:8px 12px;border-radius:6px;border:1px solid rgba(0,0,0,0.1)}
+.nav-links{display:flex;justify-content:center;gap:16px;transition:max-height .25s ease,opacity .25s ease}
+.nav-links a{color:var(--muted);font-weight:600}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;padding:48px 16px;max-width:var(--max-width);margin:0 auto}
+.hero-left h1{font-family:'Playfair Display',serif;font-size:52px;margin-bottom:16px;color:var(--accent)}
+.hero-left p{color:var(--muted);max-width:45ch;margin-bottom:20px}
+.cta{display:inline-block;background:var(--gold);color:#fff;padding:12px 20px;border-radius:8px;font-weight:700}
+
+/* Sections */
+.section{padding:48px 16px;max-width:var(--max-width);margin:0 auto}
+.section-title{font-family:'Playfair Display',serif;font-size:28px;margin-bottom:20px;text-align:center}
+
+/* Collection & Info Cards (styled like product but simpler) */
+.card{
+  background:#fff;
+  border-radius:16px;
+  box-shadow:var(--card-shadow);
+  overflow:hidden;
+  flex:0 0 260px;
+  display:flex;
+  flex-direction:column;
+  transition:transform .18s, box-shadow .18s;
+  cursor:pointer;
+  position:relative;
+}
+.card:hover{transform:translateY(-6px);box-shadow:0 10px 28px rgba(0,0,0,0.15)}
+.card::after{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(185,144,86,0.1);
+  opacity:0;
+  transition:opacity .2s;
+}
+.card:hover::after{opacity:1}
+.card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:12px 12px 0 0;
+}
+.card h3{
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  margin:12px 16px 4px;
+  color:var(--accent);
+  position:relative;
+  z-index:1;
+}
+.card p{
+  font-size:14px;
+  color:var(--muted);
+  margin:0 16px 16px;
+  position:relative;
+  z-index:1;
+}
+
+/* Collections slider */
+.collections-slider{overflow:hidden;position:relative}
+.slider-track{
+  display:flex;gap:16px;will-change:transform;transform:translateX(0);
+  cursor:grab;
+  touch-action:pan-y; /* Allow vertical scrolling but capture horizontal */
+  user-select:none; /* Prevent text selection on drag */
+}
+.slider-track:active{cursor:grabbing}
+
+/* Product card (richer) */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.product{
+  background:#fff;border-radius:16px;box-shadow:var(--card-shadow);overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .18s;position:relative;padding:0;
+}
+.product:hover{transform:translateY(-6px)}
+.product .image-wrap{position:relative;height:220px;background:#fff;display:flex;align-items:center;justify-content:center;padding:18px}
+.product .image-wrap img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+.product .arrow-btn{
+  position:absolute;right:14px;bottom:14px;background:rgba(255,255,255,0.9);border:none;border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.06)
+}
+.product .info{padding:14px 16px 18px;display:flex;flex-direction:column;gap:8px}
+.product h3{font-family:'Playfair Display',serif;font-size:18px;margin:0}
+.product .description{font-size:13px;color:var(--muted);margin:0 0 4px}
+.product .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.product .tag{background:#f3efe8;border-radius:999px;padding:6px 10px;font-size:12px;color:var(--accent);font-weight:600}
+.product .price{font-size:20px;font-weight:800;color:var(--accent)}
+.product .card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:8px;gap:12px}
+.product .add-btn{background:var(--accent);color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+.product .muted{font-size:12px;color:var(--muted)}
+
+/* Cart */
+.cart-btn{position:fixed;right:16px;bottom:16px;background:var(--gold);border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;box-shadow:var(--card-shadow);cursor:pointer;z-index:200}
+.cart-count{position:absolute;top:6px;right:6px;background:#111;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:12px}
+/* Cart Panel - UPDATED Z-INDEX */
+.cart-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 400px;
+  max-width: 100%;
+  background: #fff;
+  box-shadow: -20px 0 40px rgba(0,0,0,0.08);
+  transform: translateX(100%);
+  transition: transform .3s;
+  padding: 20px;
+  
+  /* CHANGED FROM 200 TO 2000 TO FIX THE OVERLAP */
+  z-index: 2000 !important; 
+  
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.cart-panel.open{transform:translateX(0); z-index: 100;}
+.cart-item{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:6px;background:#f5f5f5;border-radius:6px}
+.qty-controls{display:flex;gap:4px;align-items:center}
+.qty-controls button{padding:2px 6px;border-radius:4px;border:0;background:#ccc;cursor:pointer}
+.cart-total {
+  margin-top: 12px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between; /* Pushes Total to left, Shipping to right */
+  align-items: center;            /* Ensures they align vertically */
+  flex-wrap: wrap;                /* Allows wrapping on very small phones */
+}
+
+/* Ensure the shipping text looks neat */
+.cart-shipping-note {
+  margin-top: 0;
+  color: #777;
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+.cart-form{display:none;flex-direction:column;gap:6px;margin-top:12px}
+.cart-form input,.cart-form select{padding:8px;border-radius:6px;border:1px solid rgba(0,0,0,0.2)}
+.pay-btn{margin-top:10px;padding:10px;border:none;border-radius:6px;background:var(--gold);color:#fff;cursor:pointer;font-weight:700}
+.close-cart{position:absolute;top:10px;right:10px;cursor:pointer;font-size:24px}
+
+footer{background:#111;color:#eee;text-align:center;padding:40px 16px;margin-top:40px}
+
+/* responsiveness */
+@media(max-width:900px){
+  .hamburger{display:flex}
+  .nav-links{flex-direction:column;align-items:center;max-height:0;overflow:hidden;opacity:0}
+  .nav-links.open{max-height:400px;opacity:1;margin-top:10px}
+  .hero{grid-template-columns:1fr;text-align:center}
+  .hero-left h1{font-size:36px}
+  .slider-track .card{flex:0 0 80%;max-width:320px}
+}
+@media(max-width:600px){
+  .hero-left h1{font-size:28px}
+  .section-title{font-size:22px}
+  .search-mobile input{max-width:100%}
+  .cart-panel{width:100%}
+}
+
+/* Sticky checkout button */
+.sticky-checkout {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold);
+  color: #fff;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 999px;
+  box-shadow: var(--card-shadow);
+  cursor: pointer;
+  z-index: 300;
+  display: none; /* hidden until cart has items */
+}
+
+/* Footer Styles */
+.main-footer {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+  color: #fff;
+  margin-top: 60px;
+  font-family: Lato, Arial, sans-serif;
+}
+
+.footer-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 50px 16px 30px;
+}
+
+/* Newsletter Section */
+.footer-newsletter {
+  text-align: center;
+  margin-bottom: 50px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-newsletter h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  margin-bottom: 12px;
+  color: var(--gold);
+}
+
+.footer-newsletter p {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 25px;
+  font-size: 16px;
+}
+
+.newsletter-form {
+  display: flex;
+  max-width: 400px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+.newsletter-input {
+  flex: 1;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 8px 0 0 8px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--accent);
+}
+
+.newsletter-input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.newsletter-btn {
+  padding: 14px 24px;
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.newsletter-btn:hover {
+  background: #a67c44;
+}
+
+/* Footer Links */
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+.footer-column h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: var(--gold);
+}
+
+.footer-column ul {
+  list-style: none;
+}
+
+.footer-column ul li {
+  margin-bottom: 12px;
+}
+
+.footer-column ul li a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.3s;
+  font-size: 15px;
+}
+
+.footer-column ul li a:hover {
+  color: var(--gold);
+}
+
+/* Social Links */
+.social-links {
+  margin-bottom: 25px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: color 0.3s;
+  font-size: 15px;
+}
+
+.social-link:hover {
+  color: var(--gold);
+}
+
+.social-link span {
+  font-size: 18px;
+  width: 24px;
+}
+
+/* Contact Info */
+.contact-info p {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.contact-info p:first-child {
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.footer-bottom-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 25px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-legal {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.legal-links {
+  display: flex;
+  gap: 20px;
+}
+
+.legal-links a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.legal-links a:hover {
+  color: var(--gold);
+}
+
+.footer-badges {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: rgba(185, 144, 86, 0.2);
+  color: var(--gold);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(185, 144, 86, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer-content {
+    padding: 40px 16px 20px;
+  }
+  
+  .footer-newsletter h3 {
+    font-size: 24px;
+  }
+  
+  .newsletter-form {
+    flex-direction: column;
+    max-width: 300px;
+  }
+  
+  .newsletter-input {
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .newsletter-btn {
+    border-radius: 8px;
+  }
+  
+  .footer-links {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .footer-bottom-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .footer-legal {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .footer-badges {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-badges {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .legal-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.social-link i {
+  width: 24px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.contact-info i {
+  width: 20px;
+  margin-right: 6px;
+  color: var(--gold);
+}
+
+
+.cart-discount-note {
+  margin: 12px 0 8px;
+  color: #777;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.cart-shipping-note {
+  margin-top: 6px;
+  color: #777;
+  font-size: 0.85rem;
+}
+
+.discounted-total {
+  margin-top: 8px;
+  font-weight: 800;
+  color: var(--gold);
+  font-size: 1.05rem;
+}
+
+.free-shipping-progress {
+  margin-top: 14px;
+  color: #666;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+
+.old-price {
+  text-decoration: line-through;
+  color: #b87a7a;
+  font-size: 16px;
+  margin-right: 6px;
+  opacity: 0.8;
+}
+
+.new-price {
+  font-weight: 800;
+  color: var(--accent);
+  font-size: 20px;
+}
+
+
+
+
+
+
+/* ========================= */
+/* FIX FOOTER 4 COLUMN LAYOUT */
+/* ========================= */
+
+/* 4 equal columns */
+.footer-links {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(200px, 1fr)) !important;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Titles consistent */
+.footer-column h4 {
+  font-size: 18px !important;
+  margin-bottom: 16px !important;
+}
+
+/* Align newsletter input/buttons */
+.newsletter-form {
+  display: flex !important;
+  width: 100% !important;
+}
+
+/* Prevent horizontal phone slide */
+footer, .footer-links, .footer-content {
+  overflow-x: hidden !important;
+}
+
+/* Responsive */
+@media(max-width:850px) {
+  .footer-links {
+    grid-template-columns: repeat(2,1fr) !important;
+  }
+}
+
+@media(max-width:500px) {
+  .footer-links {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+  }
+}
+
+
+
+
+/* ======== FINAL FOOTER FIXES ======== */
+
+/* Restore black bottom bar */
+.footer-bottom {
+  background: #000 !important;
+}
+
+/* Newsletter visibility fix */
+.newsletter-form {
+  display: flex !important;
+  width: 100% !important;
+}
+
+.newsletter-input,
+.newsletter-btn {
+  height: 48px !important;
+  font-size: 15px !important;
+}
+
+/* Social icons match gold style */
+.social-link i {
+  color: var(--gold) !important;
+  width: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* Better alignment */
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  color: rgba(255,255,255,0.85) !important;
+}
+
+/* Mobile alignment fixes */
+@media(max-width:600px) {
+  .footer-column {
+    text-align: center !important;
+  }
+
+  .social-link {
+    justify-content: center !important;
+  }
+
+  .contact-info p {
+    text-align: center !important;
+  }
+
+  .newsletter-form {
+    flex-direction: column !important;
+  }
+
+  .newsletter-input {
+    border-radius: 6px !important;
+    margin-bottom: 10px;
+  }
+
+  .newsletter-btn {
+    border-radius: 6px !important;
+  }
+}
+
+
+
+
+/* =============================
+   FINAL FOOTER FIXES (Stable)
+   ============================= */
+
+/* 1️⃣ Remove black background completely */
+.footer-bottom {
+  background: transparent !important;
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+}
+
+/* 2️⃣ Customer Service spacing & alignment */
+.contact-info p {
+  margin-bottom: 12px !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 3️⃣ Make Customer Service icons gold like Connect */
+.contact-info i {
+  color: var(--gold) !important;
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+}
+
+/* 4️⃣ Newsletter input & button full width visible */
+.footer-column .newsletter-form {
+  display: flex !important;
+  width: 100% !important;
+  max-width: 420px !important;
+}
+
+.footer-column .newsletter-input {
+  flex: 1;
+  border-radius: 8px 0 0 8px;
+  padding: 14px 18px;
+  font-size: 15px;
+}
+
+.footer-column .newsletter-btn {
+  border-radius: 0 8px 8px 0;
+  padding: 14px 22px;
+  font-size: 15px;
+  background: var(--gold);
+  color: #fff;
+  border: none;
+}
+
+/* 5️⃣ Make entire fourth column align same height */
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 60px;
+  align-items: start;
+}
+
+/* 6️⃣ Mobile fixes */
+@media(max-width:780px) {
+
+  .footer-links {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+  }
+
+  .social-link {
+    justify-content: center;
+  }
+
+  .contact-info p {
+    justify-content: center;
+  }
+
+  .footer-column .newsletter-form {
+    flex-direction: column !important;
+    max-width: 320px !important;
+    margin: 0 auto;
+  }
+
+  .footer-column .newsletter-input {
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+  .footer-column .newsletter-btn {
+    border-radius: 8px;
+  }
+}
+
+
+/* =======================================
+   FOOTER FINAL SPACING + CENTERING FIXES
+   ======================================= */
+
+/* 1️⃣ Equal spacing for Customer Service items */
+.contact-info p {
+  margin: 10px 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 12px !important; /* equal icon + text spacing */
+  font-size: 15px;
+}
+
+/* Same spacing as Shop/Connect list */
+.footer-column ul li,
+.social-link {
+  margin-bottom: 10px !important;
+}
+
+/* 2️⃣ Center bottom footer content */
+.footer-bottom-content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  gap: 15px !important;
+}
+
+/* Center legal links text & badges */
+.footer-legal,
+.legal-links,
+.footer-badges {
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+/* 3️⃣ Fix alignment of bottom text line */
+.footer-legal p {
+  width: 100%;
+  text-align: center !important;
+  margin-bottom: 8px;
+}
+
+/* 4️⃣ Consistent font size in bottom links */
+.legal-links a {
+  font-size: 14px !important;
+}
+
+/* 5️⃣ Make badges line centered and compact */
+.footer-badges .badge {
+  font-size: 13px !important;
+  padding: 6px 14px !important;
+  display: inline-block;
+  text-align: center;
+}
+
+/* 6️⃣ Mobile centering (force) */
+@media(max-width:780px) {
+
+  .footer-bottom-content {
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .footer-legal,
+  .legal-links,
+  .footer-badges {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+}
+
+
+
+/* ===== FINAL CUSTOMER SERVICE SPACING FIX ===== */
+
+.contact-info p {
+  margin: 14px 0 !important;     /* equal spacing top & bottom */
+  line-height: 1.55 !important;  /* clean readable line height */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+
+
+/* === MATCH CUSTOMER SERVICE SPACING TO SHOP LIST === */
+.contact-info p {
+  margin-bottom: 12px !important;   /* exactly like li item */
+  margin-top: 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 10px !important;
+  line-height: 1.4;
+}
+
+
+
+/* ==============================
+   FINAL CUSTOMER SERVICE MATCH
+   ============================== */
+
+/* Same spacing as Shop & Connect */
+.contact-info p {
+  margin: 12px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  font-size: 15px !important;
+  color: rgba(255,255,255,0.85) !important;
+  line-height: 1.45 !important;
+}
+
+/* Same icon look as Connect */
+.contact-info p i {
+  color: var(--gold) !important;
+  font-size: 18px !important;
+  width: 24px !important;
+  text-align: center !important;
+}
+
+/* Remove weird extra spacing from first child */
+.contact-info p:first-child {
+  margin-top: 0 !important;
+}
+
+
+
+/* ==== FORCE CUSTOMER SERVICE LIST TO MATCH CONNECT ==== */
+
+.footer-column:nth-child(3) p {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 12px 0 !important;
+  padding: 0 !important;
+  font-size: 15px !important;
+  color: rgba(255,255,255,0.85) !important;
+}
+
+/* ICON LOOK EXACTLY SAME AS CONNECT */
+.footer-column:nth-child(3) p i {
+  color: var(--gold) !important;
+  font-size: 18px !important;
+  width: 24px !important;
+  text-align: center !important;
+}
+
+
+
+/* ======== SLIDING OFFER BANNER (Improved) ======== */
+.offer-banner{
+  width:100%;
+  overflow:hidden;
+  background:#b99056;
+  color:#fff;
+  font-weight:700;
+  font-size:18px;
+  padding:10px 0;
+  white-space:nowrap;
+  position:relative;
+}
+
+.offer-track{
+  display:inline-block;
+  /* removed big left padding = no late start */
+  animation:offerSlide 30s linear infinite; /* slower speed */
+}
+
+/* smoother infinite loop */
+@keyframes offerSlide{
+  0% { transform:translateX(0); }
+  100% { transform:translateX(-50%); } /* perfect seamless loop */
+}
+
+@media(max-width:600px){
+  .offer-banner{
+    font-size:14px;
+    padding:8px 0;
+  }
+}
+
+/* ======================
+   FAWAZ HEADER (FIGMA STYLE)
+   ====================== */
+
+.ff-header {
+  width: 100%;
+  background: #FFFCE9;
+  position: sticky;
+  top: 0;
+  z-index: 300;
+}
+
+.ff-header-inner {
+  max-width: 1200px;
+  height: 62px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+}
+
+/* ------- Logo ------- */
+.ff-logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+/* ------- Search Bar ------- */
+.ff-search {
+  flex: 1;
+  max-width: 420px;
+  position: relative;
+  margin: 0 18px;
+}
+
+.ff-search input {
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid #C2BAB7;
+  border-radius: 50px;
+  height: 34px;
+  padding: 0 40px 0 15px;
+  outline: none;
+  font-size: 15px;
+  color: #6b6b6b;
+}
+
+.ff-search i {
+  position: absolute;
+  right: 14px;
+  top: 8px;
+  font-size: 18px;
+  color: #6b4b3e;
+  cursor: pointer;
+}
+
+/* ------- Hamburger ------- */
+.ff-ham {
+  width: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.ff-ham span {
+  width: 100%;
+  height: 3px;
+  background: #6b4b3e;
+  border-radius: 2px;
+}
+
+/* ------- Bottom line ------- */
+.ff-bottom-line {
+  width: 100%;
+  height: 5px;
+  background: #fffce9;
+}
+
+@media(max-width:600px){
+  .ff-search input {
+    height: 32px;
+    font-size: 13px;
+  }
+
+  .ff-search i {
+    top: 7px;
+  }
+
+  .ff-logo img {
+    height: 32px;
+  }
+}
+
+
+/* =======================
+   MOBILE MENU (Drawer)
+   ======================= */
+.ff-mobile-menu {
+  position: fixed;
+  top: 62px; /* exactly below header */
+  right: -280px;
+  width: 260px;
+  height: 100vh;
+  background: #FFFCE9;
+  border-left: 2px solid #fffce9;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-weight: 600;
+  transition: right .3s ease-in-out;
+  z-index: 500;
+}
+
+.ff-mobile-menu a {
+  color: #664136;
+  font-size: 16px;
+}
+
+.ff-mobile-menu.open {
+  right: 0;
+  box-shadow: -12px 0 32px rgba(0,0,0,0.2);
+}
+
+
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <!-- NEW HEADER -->
+<header class="ff-header">
+  <div class="ff-header-inner">
+
+    <!-- Left: Logo -->
+    <div class="ff-logo">
+      <img src="Logo.png" alt="Fawaz Fragrance">
+    </div>
+
+    <!-- Center: Search -->
+    <div class="ff-search">
+      <input id="searchInput" type="text" placeholder="Search perfumes...">
+      <i class="fas fa-search" id="searchBtn"></i>
+    </div>
+
+    <!-- Right: Hamburger -->
+    <div class="ff-ham" id="hamburgerBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+  </div>
+
+  <!-- Bottom brown line -->
+  <div class="ff-bottom-line"></div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="ff-mobile-menu" id="ffMobileMenu">
+  <a href="#collections">Collections</a>
+  <a href="#shop">Shop</a>
+  <a href="products.html">All Products</a>
+  <a href="journal.html">Journal</a>
+  <a href="about.html">About</a>
+</div>
+
+
+
+  <!-- 🔥 Sliding Offer Banner -->
+<div class="offer-banner">
+  <div class="offer-track">
+    Limited-Time Launch Offer: Flat 12.5% OFF. Live Now! ✨ &nbsp; • &nbsp;
+    Limited-Time Launch Offer: Flat 12.5% OFF. Live Now! ✨ &nbsp; • &nbsp;
+    Limited-Time Launch Offer: Flat 12.5% OFF. Live Now! ✨ &nbsp; • &nbsp;
+    Limited-Time Launch Offer: Flat 12.5% OFF. Live Now! ✨ &nbsp; • &nbsp;
+    Limited-Time Launch Offer: Flat 12.5% OFF. Live Now! ✨ &nbsp; • &nbsp;
+    Limited-Time Launch Offer: Flat 12.5% OFF. Live Now! ✨ &nbsp; • &nbsp;
+    Limited-Time Launch Offer: Flat 12.5% OFF. Live Now! ✨ &nbsp; • &nbsp;
+    Limited-Time Launch Offer: Flat 12.5% OFF. Live Now! ✨ &nbsp; • &nbsp;
+    Limited-Time Launch Offer: Flat 12.5% OFF. Live Now! ✨ &nbsp; • &nbsp;
+  </div>
+</div>
+
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-left">
+      <h1>Where Elegance Meets Essence</h1>
+      <p>Discover timeless fragrances crafted with sophistication and artistry.</p>
+      <a href="#shop" class="cta">Shop Now</a>
+    </div>
+    <div class="hero-right">
+      <div class="bottle"><img src="Banner.png" alt="Perfume Bottle"></div>
+    </div>
+  </section>
+
+  <!-- Collections -->
+  <section class="section" id="collections">
+    <h2 class="section-title">Our Collections</h2>
+    <div class="collections-slider">
+      <div class="slider-track" id="sliderTrack">
+        <!-- original items -->
+        <div class="card collection-card" data-category="Classic"><img src="perfume1.jpeg" alt=""><h3>Classic</h3><p>Elegant timeless scents.</p></div>
+        <div class="card collection-card" data-category="Luxury"><img src="perfume2.jpeg" alt=""><h3>Luxury</h3><p>Exclusive premium blends.</p></div>
+        <div class="card collection-card" data-category="Modern"><img src="perfume3.jpeg" alt=""><h3>Modern</h3><p>Fresh contemporary notes.</p></div>
+        <!-- duplicates (seamless loop) - keep these duplicates -->
+        <div class="card collection-card" data-category="Classic"><img src="perfume1.jpeg" alt=""><h3>Classic</h3><p>Elegant timeless scents.</p></div>
+        <div class="card collection-card" data-category="Luxury"><img src="perfume2.jpeg" alt=""><h3>Luxury</h3><p>Exclusive premium blends.</p></div>
+        <div class="card collection-card" data-category="Modern"><img src="perfume3.jpeg" alt=""><h3>Modern</h3><p>Fresh contemporary notes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shop -->
+  <section class="section" id="shop">
+  <h2 class="section-title">Shop Perfumes</h2>
+  <div class="products-grid homeProducts">
+
+    <div class="product" 
+         data-name="Burberry Weekend" 
+         data-price="200" 
+         data-img="./Attar Photos/Burberry Weekend6.png"
+         data-desc="A relaxing, fresh, and citrusy fragrance."
+         data-details="A relaxing and fresh fragrance found in the outdoor spirit of the brand. It has a sheer, fresh, and citrusy floral fragrance that invites you to relax and enjoy the moment."
+         data-notes="Top: Mignonette, Mandarin Orange | Heart: Nectarine, Blue Hyacinth, Iris | Base: Sandalwood, Musk, Cedar">
+      <div class="image-wrap">
+        <img src="./Attar Photos/Burberry Weekend6.png" alt="Burberry Weekend" onclick="goToDetails(this)">
+        <button class="arrow-btn" aria-hidden="true" onclick="goToDetails(this.previousElementSibling)">›</button>
+      </div>
+      <div class="info">
+        <h3>Burberry Weekend</h3>
+        <p class="description">A relaxing, fresh, and citrusy fragrance.</p>
+        <div class="card-footer">
+          <div>
+            <div class="hp-price" data-price="200"></div>
+            <div class="tags">
+              <span class="tag">Daytime</span>
+              <span class="tag">Fresh</span>
+            </div>
+          </div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product"
+         data-name="D' love Sauvage" 
+         data-price="250" 
+         data-img="./Attar Photos/Dlove Sauvage8.png"
+         data-desc="Radically fresh, raw and noble."
+         data-details="A radically fresh composition, dictated by a name that has the ring of a manifesto. Natural ingredients, selected with extreme care, prevail in excessive doses."
+         data-notes="Top: Calabrian Bergamot, Pepper | Heart: Sichuan Pepper, Lavender, Pink Pepper | Base: Ambroxan, Cedar">
+      <div class="image-wrap">
+        <img src="./Attar Photos/Dlove Sauvage8.png" alt="D' love Sauvage" onclick="goToDetails(this)">
+        <button class="arrow-btn" aria-hidden="true" onclick="goToDetails(this.previousElementSibling)">›</button>
+      </div>
+      <div class="info">
+        <h3>D' love Sauvage</h3>
+        <p class="description">Radically fresh, raw and noble.</p>
+        <div class="card-footer">
+          <div>
+            <div class="hp-price" data-price="250"></div>
+            <div class="tags">
+              <span class="tag">Spicy</span>
+              <span class="tag">Bold</span>
+            </div>
+          </div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product"
+         data-name="Musk Rose" 
+         data-price="250" 
+         data-img="./Attar Photos/Musk Rose11.png"
+         data-desc="Soft petals meeting creamy musk."
+         data-details="An enchanting blend where the romance of blooming roses meets the softness of white musk. It is delicate, powdery, and absolutely elegant."
+         data-notes="Top: Rose Petals, Peony | Heart: Jasmine, White Musk | Base: Amber, Powder Notes">
+      <div class="image-wrap">
+        <img src="./Attar Photos/Musk Rose11.png" alt="Musk Rose" onclick="goToDetails(this)">
+        <button class="arrow-btn" aria-hidden="true" onclick="goToDetails(this.previousElementSibling)">›</button>
+      </div>
+      <div class="info">
+        <h3>Musk Rose</h3>
+        <p class="description">Soft petals meeting creamy musk.</p>
+        <div class="card-footer">
+          <div>
+           <div class="hp-price" data-price="250"></div>
+            <div class="tags">
+              <span class="tag">Floral</span>
+              <span class="tag">Powdery</span>
+            </div>
+          </div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product"
+         data-name="Oud Lavender" 
+         data-price="250" 
+         data-img="./Attar Photos/Oud Lavender15.png"
+         data-desc="Calming lavender meets deep, resinous oud."
+         data-details="A surprising and delightful combination. The calming, herbaceous freshness of Lavender cuts through the dark richness of Oud, creating a perfectly balanced modern masterpiece."
+         data-notes="Top: French Lavender, Lemon | Heart: Violet, Oud | Base: Patchouli, Musk">
+      <div class="image-wrap">
+        <img src="./Attar Photos/Oud Lavender15.png" alt="Oud Lavender" onclick="goToDetails(this)">
+        <button class="arrow-btn" aria-hidden="true" onclick="goToDetails(this.previousElementSibling)">›</button>
+      </div>
+      <div class="info">
+        <h3>Oud Lavender</h3>
+        <p class="description">Calming lavender meets deep, resinous oud.</p>
+        <div class="card-footer">
+          <div>
+          <div class="hp-price" data-price="250"></div>
+            <div class="tags">
+              <span class="tag">Premium</span>
+              <span class="tag">Woody</span>
+            </div>
+          </div>
+          <button class="add-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div style="text-align:center;margin-top:20px;">
+    <a href="products.html" class="cta">View More Products</a>
+  </div>
+</section>
+
+  <!-- Cart Button & Panel -->
+  <div class="cart-btn" id="cartBtn">🛒<div class="cart-count" id="cartCount">0</div></div>
+
+  <div class="cart-panel" id="cartPanel" aria-hidden="true">
+    <span class="close-cart" id="closeCart">&times;</span>
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <div class="cart-total" id="cartTotal">Total: ₹0</div>
+    <button class="pay-btn" id="checkoutBtn">Checkout</button>
+
+<!-- Checkout Form -->
+<div class="cart-form" id="cartForm">
+  <h3>Checkout Details</h3>
+  <input type="text" id="customerName" placeholder="Full Name" required/>
+  <input type="tel" id="customerPhone" placeholder="Phone Number" required/>
+  <input type="email" id="customerEmail" placeholder="Email" required/>
+  <input type="text" id="customerFlat" placeholder="Flat Number / House Number / Room Number" required/>
+  <input type="text" id="customerStreet" placeholder="Street Address" required/>
+  <input type="text" id="customerCity" placeholder="City" required/>
+  <input type="text" id="customerZip" placeholder="Zipcode" required/>
+  <input type="text" id="customerState" placeholder="State" required/>
+  <input type="text" id="customerLandmark" placeholder="Landmark" required/>
+  <input type="text" id="customerCountry" placeholder="Country" required/>
+  <button class="pay-btn" id="confirmPayBtn">Confirm & Pay via WhatsApp</button>
+  <button class="pay-btn" id="backBtn" style="background:#ccc;color:#111;margin-top:6px;">Back</button>
+</div>
+  </div>
+
+<footer class="main-footer">
+  <div class="footer-content">
+
+    <!-- Footer Links (4 columns) -->
+    <div class="footer-links">
+
+      <!-- COLUMN 1 -->
+      <div class="footer-column">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="products.html">All Perfumes</a></li>
+          <li><a href="products.html?category=Classic">Classic Collection</a></li>
+          <li><a href="products.html?category=Luxury">Luxury Collection</a></li>
+          <li><a href="products.html?category=Modern">Modern Collection</a></li>
+          <li><a href="#bestsellers">Best Sellers</a></li>
+        </ul>
+      </div>
+
+      <!-- COLUMN 2 -->
+      <div class="footer-column">
+        <h4>Connect</h4>
+        <a class="social-link" href="https://www.facebook.com/profile.php?id=61578977254156"><i class="fab fa-facebook-f"></i> Facebook</a>
+        <a class="social-link" href="https://www.instagram.com/fawazfragrance/"><i class="fab fa-instagram"></i> Instagram</a>
+        <a class="social-link" href="https://in.pinterest.com/fawazfragrance/"><i class="fab fa-pinterest-p"></i> Pinterest</a>
+      </div>
+
+      <!-- COLUMN 3 -->
+      <div class="footer-column">
+        <h4>Customer Service</h4>
+        <p><i class="fas fa-phone"></i> +91 9004263544</p>
+        <p><i class="fas fa-envelope"></i> fawazfragnance@gmail.com</p>
+        <p><i class="fas fa-clock"></i> Mon–Fri: 9AM–6PM IST</p>
+      </div>
+
+      <!-- COLUMN 4 (NEWSLETTER MOVED HERE) -->
+     <div class="footer-column">
+          <h4>Stay In The Loop</h4>
+          <p style="color:rgba(255,255,255,0.75);font-size:14px;margin-bottom:12px;">
+            Subscribe to get special offers, exclusive launches, and fragrance tips.
+          </p>
+          <div class="newsletter-form" style="display:flex;gap:0;">
+            <input id="footerNewsInput" type="email" placeholder="Enter your email" class="newsletter-input" style="border-radius:6px 0 0 6px;">
+            <button id="footerNewsBtn" class="newsletter-btn" style="border-radius:0 6px 6px 0;">Subscribe</button>
+          </div>
+        </div>
+
+    </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <div class="footer-bottom-content">
+      <div class="footer-legal">
+        <p>&copy; 2025 Fawaz Fragrence. All rights reserved. Crafted by Eaz Nexora</p>
+        <div class="legal-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </div>
+      </div>
+      <div class="footer-badges">
+        <div class="badge">🔒 Secure Shopping</div>
+        <div class="badge">🚚 Free Shipping ₹599+</div>
+        <div class="badge">↩️ Easy Returns</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<button id="stickyCheckout" class="sticky-checkout">Checkout (₹0)</button>
+
+<script>
+
+function generateOrderNumber() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  const datePart = `${yyyy}${mm}${dd}`;
+  const key = `fwz_order_${datePart}`;
+  let lastNumber = parseInt(localStorage.getItem(key) || "0");
+  lastNumber += 1; 
+  localStorage.setItem(key, lastNumber.toString());
+  const padded = String(lastNumber).padStart(5, '0');
+  return `FWZ-${datePart}-${padded}`;
+}
+
+function handleStickyCheckoutVisibility() {
+  const stickyCheckout = document.getElementById('stickyCheckout');
+  const cartPanel = document.getElementById('cartPanel');
+  if (!stickyCheckout) return;
+  const cart = JSON.parse(localStorage.getItem('alabwa_cart_v1') || '[]');
+
+  if (cart.length === 0) {
+    stickyCheckout.style.display = 'none';
+    return;
+  }
+  if (cartPanel.classList.contains('open')) {
+    stickyCheckout.style.display = 'none';
+    return;
+  }
+  stickyCheckout.style.display = 'block';
+}
+
+// ====== FIXED: Now sends Details and Notes to the next page ======
+function goToDetails(img) {
+  const productCard = img.closest('.product');
+  
+  // Grab basic info
+  const name = productCard.dataset.name;
+  const price = productCard.dataset.price;
+  const description = productCard.dataset.desc;
+  const image = img.getAttribute('src');
+
+  // Grab NEW info
+  const details = productCard.dataset.details || '';
+  const notes = productCard.dataset.notes || '';
+
+  const params = new URLSearchParams({
+    name: name,
+    price: price,
+    desc: description,
+    img: image,
+    details: details, // sending this now
+    notes: notes      // sending this now
+  });
+
+  window.location.href = `product-details.html?${params.toString()}`;
+}
+
+(function(){
+  'use strict';
+
+  // ========== HELPERS ==========
+  const qs = (sel, ctx=document) => ctx.querySelector(sel);
+  const qsa = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+  const parsePrice = txt => parseInt(String(txt||'').replace(/[^\d]/g,''),10) || 0;
+  const STORAGE_KEY = 'alabwa_cart_v1';
+  const DISCOUNT_RATE = 0.125; 
+  const SHIPPING_CHARGE = 75;
+  const FREE_SHIPPING_THRESHOLD = 599;
+
+  // ========== ELEMENTS ==========
+  const hamburgerBtn = qs('#hamburgerBtn');
+  const navLinks = qs('#ffMobileMenu');
+  const searchInput = qs('#searchInput');
+  
+  const cartBtn = qs('#cartBtn');
+  const cartPanel = qs('#cartPanel');
+  const closeCart = qs('#closeCart');
+  const checkoutBtn = qs('#checkoutBtn');
+  const cartForm = qs('#cartForm');
+  const backBtn = qs('#backBtn');
+  const cartItemsEl = qs('#cartItems');
+  const cartTotalEl = qs('#cartTotal');
+  const cartCountEl = qs('#cartCount');
+
+  function ensureSticky() {
+    let s = qs('#stickyCheckout');
+    if (!s) {
+      s = document.createElement('button');
+      s.id = 'stickyCheckout';
+      s.className = 'sticky-checkout';
+      s.style.display = 'none';
+      s.textContent = 'Checkout (₹0)';
+      document.body.appendChild(s);
+    }
+    return s;
+  }
+
+  // ========== CART FUNCTIONALITY ==========
+  let cart = [];
+  try { cart = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e){ cart = []; }
+
+  const stickyCheckout = ensureSticky();
+
+  function saveCart(){ 
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cart || [])); 
+  }
+
+  // ====== FIXED RENDER CART ======
+  function renderCart() {
+    if (!cartItemsEl) return;
+    cartItemsEl.innerHTML = '';
+
+    // ORIGINAL SUBTOTAL
+    let originalSubtotal = 0;
+    cart.forEach(item => {
+      originalSubtotal += item.price * item.qty;
+    });
+
+    // --- FIX: Strict Shipping Logic ---
+    let shipping = 0;
+    // Only apply shipping if cart has items AND is under threshold
+    if (cart.length > 0 && originalSubtotal < FREE_SHIPPING_THRESHOLD) {
+        shipping = SHIPPING_CHARGE;
+    }
+
+    // DISCOUNTED SUBTOTAL
+    let discountedSubtotal = 0;
+    cart.forEach(item => {
+      const discountedUnit = Math.round(item.price * (1 - DISCOUNT_RATE));
+      discountedSubtotal += discountedUnit * item.qty;
+    });
+
+    // FINAL TOTALS
+    const originalTotalWithShipping = originalSubtotal + shipping;
+    const discountedTotalWithShipping = discountedSubtotal + shipping;
+
+    // RENDER ITEMS
+    if (cart.length === 0) {
+        cartItemsEl.innerHTML = '<div style="text-align:center; padding:20px; color:#666;">Your cart is empty</div>';
+    } else {
+        cart.forEach((item, idx) => {
+          const row = document.createElement('div');
+          row.className = 'cart-item';
+      
+          const img = document.createElement('img');
+          img.src = item.image || '';
+          img.alt = item.name || '';
+          img.style.width = '50px';
+          img.style.height = '50px';
+          img.style.objectFit = 'cover';
+          img.style.borderRadius = '6px';
+      
+          const nameSpan = document.createElement('span');
+          nameSpan.textContent = item.name;
+          nameSpan.style.flex = '1';
+          nameSpan.style.fontWeight = '600';
+      
+          const qtyDiv = document.createElement('div');
+          qtyDiv.className = 'qty-controls';
+      
+          const dec = document.createElement('button');
+          dec.type = 'button';
+          dec.textContent = '-';
+          dec.addEventListener('click', (ev)=>{ ev.stopPropagation(); changeQty(idx, -1); });
+      
+          const qtyNum = document.createElement('span');
+          qtyNum.textContent = item.qty;
+          qtyNum.style.margin = '0 8px';
+      
+          const inc = document.createElement('button');
+          inc.type = 'button';
+          inc.textContent = '+';
+          inc.addEventListener('click', (ev)=>{ ev.stopPropagation(); changeQty(idx, +1); });
+      
+          qtyDiv.append(dec, qtyNum, inc);
+      
+          const priceSpan = document.createElement('span');
+          priceSpan.textContent = `₹${item.price * item.qty}`;
+          priceSpan.style.fontWeight = '700';
+      
+          row.append(img, nameSpan, qtyDiv, priceSpan);
+          cartItemsEl.appendChild(row);
+        });
+    }
+
+    // ==== DISCOUNT NOTE ====
+    if (cart.length > 0) {
+      const discountNote = document.createElement('div');
+      discountNote.className = 'cart-discount-note';
+      discountNote.textContent = 'Introductory Offer @12.5% on each product has been applied';
+      cartItemsEl.appendChild(discountNote);
+    }
+
+    // ==== TOTALS ====
+    if (cartTotalEl) {
+      cartTotalEl.innerHTML = ''; 
+      const priceSpan = document.createElement('span');
+      // Ensure it shows 0 if empty
+      priceSpan.textContent = `Total: ₹${cart.length > 0 ? originalTotalWithShipping : 0}`;
+      cartTotalEl.appendChild(priceSpan);
+
+      if (shipping > 0) {
+        const shipSpan = document.createElement('span');
+        shipSpan.className = 'cart-shipping-note';
+        shipSpan.textContent = `Includes ₹${shipping} Shipping`;
+        cartTotalEl.appendChild(shipSpan);
+      }
+    }
+
+    // ==== DISCOUNTED TOTAL ====
+    let discountedEl = document.getElementById('discountedTotalEl');
+    if (!discountedEl) {
+      discountedEl = document.createElement('div');
+      discountedEl.id = 'discountedTotalEl';
+      discountedEl.className = 'discounted-total';
+      cartTotalEl.insertAdjacentElement('afterend', discountedEl);
+    }
+    
+    if (cart.length > 0) {
+        discountedEl.textContent = `Discounted Total: ₹${discountedTotalWithShipping}`;
+        discountedEl.style.display = 'block';
+    } else {
+        discountedEl.style.display = 'none';
+    }
+
+    // ==== FREE SHIPPING PROGRESS ====
+    let progressEl = document.getElementById('freeShippingProgress');
+    if (!progressEl) {
+      progressEl = document.createElement('div');
+      progressEl.id = 'freeShippingProgress';
+      progressEl.className = 'free-shipping-progress';
+      cartPanel.appendChild(progressEl);
+    }
+
+    if (cart.length > 0) {
+        const amountNeeded = Math.max(0, FREE_SHIPPING_THRESHOLD - originalSubtotal);
+        progressEl.textContent =
+          amountNeeded > 0
+          ? `₹${amountNeeded} away from free shipping`
+          : `You have free shipping!`;
+        progressEl.style.display = 'block';
+    } else {
+        progressEl.style.display = 'none';
+    }
+
+    // ==== CART COUNT ====
+    if (cartCountEl) {
+      cartCountEl.textContent = cart.reduce((s,i) => s + i.qty, 0);
+    }
+
+    // ==== CART BUTTON VISIBILITY ====
+    if (cartBtn) {
+        cartBtn.style.display = cart.length === 0 ? 'none' : 'flex';
+    }
+
+    // ==== STICKY CHECKOUT ====
+    if (stickyCheckout) {
+      if (cart.length > 0 && originalTotalWithShipping > 0) {
+        stickyCheckout.textContent = `Checkout (₹${originalTotalWithShipping})`;
+        // Visibility is handled by the scroll/resize handler separately
+      } else {
+        stickyCheckout.style.display = 'none';
+      }
+    }
+    
+    saveCart();
+    handleStickyCheckoutVisibility();
+  }
+
+  function changeQty(idx, delta){
+    if (!cart[idx]) return;
+    cart[idx].qty += delta;
+    if (cart[idx].qty <= 0) cart.splice(idx,1);
+    renderCart();
+  }
+
+  function addToCartFromProductEl(productEl){
+    if (!productEl) return;
+    // Use dataset for reliability
+    const name = productEl.dataset.name;
+    const price = parseInt(productEl.dataset.price, 10);
+    const image = productEl.dataset.img || productEl.querySelector('img').src;
+
+    const existing = cart.find(i => i.name === name);
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({ name, price, image, qty: 1 });
+    }
+    renderCart();
+    openCart();
+  }
+
+  // ========== NAVIGATION ==========
+  function navigateToCategory(category) {
+    window.location.href = `products.html?category=${encodeURIComponent(category)}`;
+  }
+
+  // ========== SLIDER LOGIC ==========
+  function initCollectionsSlider() {
+    const track = qs('#sliderTrack');
+    if (!track) return;
+
+    let halfWidth = Math.max(1, track.scrollWidth / 2);
+    let pos = 0;
+    let isAutoPlaying = true;
+    let isDragging = false;
+    let startX = 0;
+    let startTime = 0;
+    let dragStart = 0;
+    let startTarget = null;
+    let hasMovedSignificantly = false;
+    const speed = 0.35;
+
+    track.style.willChange = 'transform';
+
+    let raf = null;
+    function step(){
+      if (isAutoPlaying && !isDragging){
+        pos += speed;
+        if (pos >= halfWidth) pos -= halfWidth;
+        track.style.transform = `translateX(-${pos}px)`;
+      }
+      raf = requestAnimationFrame(step);
+    }
+
+    function startDrag(x, target) {
+      isDragging = true;
+      isAutoPlaying = false;
+      startX = x;
+      startTime = Date.now();
+      dragStart = pos;
+      startTarget = target;
+      hasMovedSignificantly = false;
+      track.style.cursor = 'grabbing';
+    }
+
+    function updateDrag(x) {
+      if (!isDragging) return;
+      const dx = x - startX;
+      if (Math.abs(dx) > 10) {
+        hasMovedSignificantly = true;
+        pos = dragStart - dx;
+        pos = ((pos % halfWidth) + halfWidth) % halfWidth;
+        track.style.transform = `translateX(-${pos}px)`;
+      }
+    }
+
+    function endDrag(endX) {
+      if (!isDragging) return;
+      const endTime = Date.now();
+      const timeDiff = endTime - startTime;
+      const dx = Math.abs(endX - startX);
+      
+      if (timeDiff < 300 && dx < 10 && !hasMovedSignificantly && startTarget) {
+        const card = startTarget.closest('.collection-card');
+        if (card && card.dataset.category) {
+          navigateToCategory(card.dataset.category);
+          return;
+        }
+      }
+      isDragging = false;
+      startTarget = null;
+      hasMovedSignificantly = false;
+      track.style.cursor = '';
+      setTimeout(() => isAutoPlaying = true, 1000);
+    }
+
+    track.addEventListener('mouseenter', () => isAutoPlaying = false);
+    track.addEventListener('mouseleave', () => { if (!isDragging) isAutoPlaying = true; });
+    track.addEventListener('mousedown', (e) => { startDrag(e.clientX, e.target); e.preventDefault(); });
+    track.addEventListener('mousemove', (e) => { updateDrag(e.clientX); });
+    track.addEventListener('mouseup', (e) => { endDrag(e.clientX); });
+    track.addEventListener('mouseleave', () => {
+      if (isDragging) {
+        isDragging = false;
+        track.style.cursor = '';
+        setTimeout(() => isAutoPlaying = true, 1000);
+      }
+    });
+
+    track.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      isAutoPlaying = false;
+      startX = e.touches[0].clientX;
+      startTime = Date.now();
+      dragStart = pos;
+      startTarget = e.target;
+    }, { passive: true });
+
+    track.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const dx = e.touches[0].clientX - startX;
+      if (Math.abs(dx) > 10) {
+        pos = dragStart - dx;
+        pos = ((pos % halfWidth) + halfWidth) % halfWidth;
+        track.style.transform = `translateX(-${pos}px)`;
+      }
+    }, { passive: true });
+
+    track.addEventListener('touchend', (e) => {
+      const endTime = Date.now();
+      const timeDiff = endTime - startTime;
+      const dx = Math.abs(e.changedTouches[0].clientX - startX);
+      
+      if (timeDiff < 300 && dx < 10 && startTarget) {
+        const card = startTarget.closest('.collection-card');
+        if (card && card.dataset.category) {
+          navigateToCategory(card.dataset.category);
+          return;
+        }
+      }
+      isDragging = false;
+      setTimeout(() => isAutoPlaying = true, 1000);
+    });
+
+    function recalc(){
+      halfWidth = Math.max(1, track.scrollWidth / 2);
+      pos = pos % halfWidth;
+      track.style.transform = `translateX(-${pos}px)`;
+    }
+    window.addEventListener('resize', recalc);
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(step);
+  }
+
+  // ========== EVENTS ==========
+  function initEventHandlers() {
+    document.addEventListener('click', function(e){
+      const abtn = e.target.closest('.add-btn');
+      if (abtn){
+        e.preventDefault();
+        const productEl = abtn.closest('.product');
+        addToCartFromProductEl(productEl);
+        return;
+      }
+      
+      const stickyClicked = e.target.closest('#stickyCheckout, .sticky-checkout');
+      if (stickyClicked){
+        e.preventDefault();
+        openCart();
+        return;
+      }
+    }, false);
+
+    if (cartBtn) cartBtn.addEventListener('click', openCart);
+    if (closeCart) closeCart.addEventListener('click', closeCartPanel);
+    if (checkoutBtn && cartForm) checkoutBtn.addEventListener('click', () => cartForm.style.display = 'flex');
+    if (backBtn && cartForm) backBtn.addEventListener('click', () => cartForm.style.display = 'none');
+
+    document.addEventListener('click', function(e){
+      if (!cartPanel || !cartPanel.classList.contains('open')) return;
+      const clickedInside = cartPanel.contains(e.target) || (cartBtn && cartBtn.contains(e.target));
+      if (!clickedInside) closeCartPanel();
+    });
+
+    const confirmPayBtn = qs('#confirmPayBtn');
+    if (confirmPayBtn) confirmPayBtn.addEventListener('click', handleWhatsAppCheckout);
+
+    if (hamburgerBtn && navLinks) {
+      hamburgerBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+    }
+    
+    initSearchFunctionality();
+
+    // ... inside initEventHandlers() ...
+
+    // Footer Newsletter WhatsApp Logic
+    const footerNewsBtn = document.getElementById('footerNewsBtn');
+    if (footerNewsBtn) {
+      footerNewsBtn.addEventListener('click', function() {
+        const emailInput = document.getElementById('footerNewsInput');
+        const email = emailInput.value.trim();
+
+        if (!email) {
+          alert('Please enter your email address.');
+          return;
+        }
+
+        // Construct Message
+        const msg = `*🔔 NEWSLETTER SIGNUP*\n\nHello, I would like to stay in the loop!\n\n*My Email:* ${email}`;
+        
+        // Open WhatsApp
+        window.open(`https://wa.me/919004263544?text=${encodeURIComponent(msg)}`, '_blank');
+        
+        // Optional: Clear input after sending
+        emailInput.value = '';
+      });
+    }
+  }
+
+  function openCart() {
+    if (cartPanel) {
+      cartPanel.classList.add('open');
+      cartPanel.setAttribute('aria-hidden', 'false');
+      if (cartForm) cartForm.style.display = 'none';
+      const stickyCheckout = document.getElementById('stickyCheckout');
+      if (stickyCheckout) stickyCheckout.style.display = 'none';
+    }
+  }
+
+  function closeCartPanel() {
+    if (cartPanel) {
+      cartPanel.classList.remove('open');
+      cartPanel.setAttribute('aria-hidden', 'true');
+      if (cartForm) cartForm.style.display = 'none';
+      handleStickyCheckoutVisibility();
+    }
+  }
+
+  function handleWhatsAppCheckout() {
+    const name = (qs('#customerName') || {}).value || '';
+    const phone = (qs('#customerPhone') || {}).value || '';
+    const email = (qs('#customerEmail') || {}).value || '';
+    const street = (qs('#customerStreet') || {}).value || '';
+    const city = (qs('#customerCity') || {}).value || '';
+    const state = (qs('#customerState') || {}).value || '';
+    const landmark = (qs('#customerLandmark') || {}).value || '';
+    const zipcode = (qs('#customerZip') || {}).value || '';
+    const flat = (qs('#customerFlat') || {}).value || '';
+    const country = (qs('#customerCountry') || {}).value || '';
+
+    if (!name || !phone || !email || !street || !city || !state || !landmark || !zipcode || !flat || !country) {
+      alert('Fill all details!');
+      return;
+    }
+
+    if (!cart.length) {
+      alert('Your cart is empty.');
+      return;
+    }
+
+    const originalSubtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    const discountedSubtotal = cart.reduce((sum, item) => {
+      const dp = Math.round(item.price * (1 - DISCOUNT_RATE));
+      return sum + dp * item.qty;
+    }, 0);
+    const shipping = originalSubtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_CHARGE;
+    const finalTotal = discountedSubtotal + shipping;
+    const orderNumber = generateOrderNumber();
+
+    let msg = `*🧾 ORDER CONFIRMATION*\n\n*Order Number:* ${orderNumber}\n\n*👤 Customer:* ${name}\n*📞 Phone:* ${phone}\n*✉️ Email:* ${email}\n\n*🏠 Address:*\n${flat}\n${street}, ${landmark}\n${city}, ${state} - ${zipcode}\n${country}\n\n────────────────────────\n\n*🧴 Order Details:*\n`;
+    cart.forEach(item => {
+      const discPrice = Math.round(item.price * (1 - DISCOUNT_RATE));
+      msg += `• ${item.qty} × ${item.name} — ₹${discPrice * item.qty}\n`;
+    });
+    msg += `\n────────────────────────\n\n*💵 Total Payable:* ₹${finalTotal}\n\n🙏 Thank you for shopping with *Fawaz Fragrance*`;
+
+    window.open(`https://wa.me/919004263544?text=${encodeURIComponent(msg)}`, "_blank");
+  }
+
+  function initSearchFunctionality() {
+    const shopSection = qs('#shop');
+    function scrollToShop(){
+      if (!shopSection) return;
+      const nav = qs('.ff-header');
+      const navH = nav ? nav.offsetHeight : 0;
+      const top = shopSection.getBoundingClientRect().top + window.pageYOffset - navH;
+      window.scrollTo({ top, behavior:'smooth' });
+    }
+    
+    if (searchInput) {
+      searchInput.addEventListener('keydown', (e)=>{
+        if (e.key === 'Enter') {
+           e.preventDefault();
+           scrollToShop();
+           searchInput.blur();
+        }
+      });
+    }
+    const sBtn = qs('#searchBtn');
+    if (sBtn) sBtn.addEventListener('click', scrollToShop);
+  }
+
+  function init() {
+    renderCart();
+    initCollectionsSlider();
+    initEventHandlers();
+    setTimeout(handleStickyCheckoutVisibility, 200);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  window.__alabwa_cart = {
+    getCart: () => JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'),
+    clearCart: () => { cart = []; renderCart(); }
+  };
+
+})();
+
+// Price formatter for product grid
+document.addEventListener("DOMContentLoaded", function () {
+  const cards = document.querySelectorAll(".hp-price[data-price]");
+  cards.forEach(priceEl => {
+    const price = parseInt(priceEl.dataset.price, 10);
+    const oldPrice = price + 40;
+    priceEl.innerHTML = `<span class="old-price">₹${oldPrice}</span><span class="new-price">₹${price}</span>`;
+  });
+});
+</script>
+</body>
+</html>
+
+
