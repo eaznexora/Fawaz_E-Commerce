@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+  <link rel="icon" href="Favicon.png" type="image/png">
     
     <style>
         /* --- CORE STYLES --- */
@@ -187,7 +189,7 @@
         </div>
 
         <div class="logo-container">
-            <a href="index.html"><img src="logo.png" alt="Fawaz Fragrance"></a>
+            <a href="index.html"><img src="./assets/logo/logo-header.png" alt="Fawaz Fragrance"></a>
         </div>
 
         <div class="header-right">
@@ -198,7 +200,7 @@
                 <a href="#">CONTACT</a>
             </nav>
             <button class="header-icon-btn" onclick="window.location.href='cart.html'">
-                <img src="./assets/icons/cart-icon.svg" alt="Cart" class="icon-img">
+                <img src="./assets/icons/kallu-cart.svg" alt="Cart" class="icon-img">
                 <span class="cart-badge" id="headerCartBadge">0</span>
             </button>
         </div>
@@ -239,7 +241,7 @@
         <button class="checkout-btn" onclick="window.location.href='cart.html'">Go to Cart</button>
         
         <button class="cart-circle-btn" id="addToCartBtn">
-            <img src="./assets/icons/cart-icon.svg" alt="Cart">
+            <img src="./assets/icons/kallu-cart.svg" alt="Cart">
         </button>
     </div>
 
@@ -269,10 +271,10 @@
 
         // --- DATABASE ---
         const productsDB = {
-            "oud_kashmiri": { name: "Oud Kashmiri", price: 159, formattedPrice: "Rs. 159", oldPrice: "Rs. 200", img: "p1.jpg", rating: "4.8", tagline: "Warm, Sweet & Elegant", desc: "A luxurious fusion of Madagascar vanille and soft amber." },
-            "rose_musk": { name: "Rose Musk", price: 159, formattedPrice: "Rs. 159", oldPrice: "Rs. 200", img: "p2.jpg", rating: "4.9", tagline: "Elegant & Floral", desc: "An enchanting blend of fresh blooming roses and soft white musk." },
-            "ameen_special": { name: "Ameen Special", price: 159, formattedPrice: "Rs. 159", oldPrice: "Rs. 200", img: "p3.jpg", rating: "5.0", tagline: "Signature Scent", desc: "Our exclusive signature blend. A powerful, masculine fragrance." },
-            "nafis_gold": { name: "Nafis Gold", price: 159, formattedPrice: "Rs. 159", oldPrice: "Rs. 200", img: "p4.jpg", rating: "4.7", tagline: "Pure Luxury", desc: "Rich, golden, and opulent." },
+            "Burberry Weekend": { name: "Burberry Weekend", price: 159, formattedPrice: "Rs. 159", oldPrice: "Rs. 200", img: "./products/Burberry Weekend.png", rating: "4.8", tagline: "Warm, Sweet & Elegant", desc: "A luxurious fusion of Madagascar vanille and soft amber." },
+            "rose_musk": { name: "Oud Kashmiri", price: 159, formattedPrice: "Rs. 159", oldPrice: "Rs. 200", img: "./products/Oud Kashmiri.png", rating: "4.9", tagline: "Elegant & Floral", desc: "An enchanting blend of fresh blooming roses and soft white musk." },
+            "ameen_special": { name: "D Blue", price: 159, formattedPrice: "Rs. 159", oldPrice: "Rs. 200", img: "./products/D Blue.png", rating: "5.0", tagline: "Signature Scent", desc: "Our exclusive signature blend. A powerful, masculine fragrance." },
+            "nafis_gold": { name: "Musk Rose", price: 159, formattedPrice: "Rs. 159", oldPrice: "Rs. 200", img: "./products/Musk Rose.png", rating: "4.7", tagline: "Pure Luxury", desc: "Rich, golden, and opulent." },
             "default": { name: "Unknown Product", price: 0, formattedPrice: "--", oldPrice: "--", img: "", rating: "0.0", tagline: "Product not found", desc: "We couldn't find the product you are looking for." }
         };
 
