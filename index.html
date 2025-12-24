@@ -21,7 +21,8 @@
             --footer-bg: #5B3E36;       
             --footer-text: #F8F5F0;     
             --footer-line: rgba(248, 245, 240, 0.2); 
-            --nav-pill-bg: #BCA380;     
+            --nav-pill-dark: #BCA380;
+            --nav-item-light: #DBCDBA; 
         }
 
         html { scroll-behavior: smooth; }
@@ -57,10 +58,44 @@
         .logo-container img { height: 45px; display: block; }
         .header-right { display: flex; align-items: center; justify-content: flex-end; }
 
-        .header-icon-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; }
+        .header-icon-btn { 
+            background: none; border: none; cursor: pointer; padding: 0; 
+            display: flex; align-items: center; justify-content: center;
+            position: relative; 
+        }
         .icon-img { width: 24px; height: 24px; object-fit: contain; }
         .search-icon-header { width: 22px; height: 22px; }
         .bag-icon-header { width: 24px; height: 24px; }
+
+        /* --- NOTIFICATION BADGE STYLE --- */
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background-color: #D32F2F; /* Vibrant Red */
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            font-family: sans-serif;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg-cream);
+            display: none; 
+            z-index: 10;
+        }
+
+        /* --- TOAST NOTIFICATION STYLES --- */
+        #toast-notification {
+            visibility: hidden; min-width: 250px; background-color: #3E2B26; color: #fff; text-align: center; 
+            border-radius: 50px; padding: 16px; position: fixed; z-index: 3000; left: 50%; bottom: 100px; 
+            transform: translateX(-50%); box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-family: 'Cambria', serif;
+            font-size: 16px; opacity: 0; transition: opacity 0.5s, bottom 0.5s;
+        }
+        #toast-notification.show { visibility: visible; opacity: 1; bottom: 110px; }
 
         /* --- SEARCH OVERLAY --- */
         .search-overlay {
@@ -115,15 +150,13 @@
         }
         .marquee-track { 
             display: flex; 
-            /* Updated speed to 15s for smoothness with more text */
-            animation: scroll 32s linear infinite; 
-            width: max-content; /* Ensures content stretches */
+            animation: scroll 20s linear infinite; 
+            width: max-content; 
         }
         .marquee-item {
             font-family: 'Times New Roman', Times, serif; font-size: 14px; letter-spacing: 1px; padding: 0 50px;
         }
         
-        /* Logic: Move 50% left. Since we duplicated the text sets, 50% is exactly one full set. */
         @keyframes scroll { 
             0% { transform: translateX(0); } 
             100% { transform: translateX(-50%); } 
@@ -146,12 +179,12 @@
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 30px; }
 
         /* Cards */
-        .range-card { display: flex; flex-direction: column; align-items: center; }
+        .range-card { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
         .range-image-container { width: 100%; background-color: #AFAFAF; aspect-ratio: 1 / 1; border-radius: 25px; overflow: hidden; margin-bottom: 12px; }
         .range-image-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .range-label { font-family: 'Baskervville', serif; font-size: 20px; font-weight: 700; color: var(--text-dark-brown); }
 
-        .shop-card { background-color: var(--box-beige); border-radius: 25px; padding: 12px; text-align: left; display: flex; flex-direction: column; }
+        .shop-card { background-color: var(--box-beige); border-radius: 25px; padding: 12px; text-align: left; display: flex; flex-direction: column; cursor: pointer; }
         .shop-image-container { width: 100%; background-color: #FFFFFF; border-radius: 20px; aspect-ratio: 1 / 1.1; margin-bottom: 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .shop-image-container img { width: 100%; height: 100%; object-fit: cover; }
         .shop-details { display: flex; justify-content: space-between; align-items: flex-end; padding: 0 5px; }
@@ -193,12 +226,35 @@
         .social-icon-img { width: 24px; height: 24px; object-fit: contain; filter: brightness(0) invert(1); }
         .copyright-text { text-align: center; font-size: 12px; opacity: 0.7; margin-top: 10px; line-height: 1.6; }
 
-        .bottom-nav-selector { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background-color: var(--nav-pill-bg); border-radius: 50px; padding: 8px 10px; display: inline-flex; align-items: center; gap: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 2000; }
-        .nav-item { border: none; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 10px 25px; border-radius: 30px; transition: all 0.3s ease; }
-        .nav-item.active { background-color: #FFFFFF; color: var(--text-dark-brown); }
-        .nav-item.active span { font-family: 'Cambria', serif; font-weight: 600; font-size: 16px; }
-        .nav-icon-btn { width: 45px; height: 45px; border-radius: 50%; background-color: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
-        .nav-icon-img { width: 20px; height: 20px; object-fit: contain; opacity: 0.6; }
+        /* --- BOTTOM NAV PILL (FIXED) --- */
+        .bottom-nav-pill {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--nav-pill-dark);
+            border-radius: 50px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 2000;
+        }
+
+        .nav-circle-btn {
+            width: 42px; height: 42px; border-radius: 50%; background-color: var(--nav-item-light);
+            display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: 0.3s;
+            position: relative; /* For badge */
+        }
+        .nav-circle-btn img { width: 20px; height: 20px; opacity: 0.6; }
+
+        .nav-active-pill {
+            background-color: #FFFFFF; border-radius: 30px; padding: 8px 20px;
+            display: flex; align-items: center; gap: 8px; height: 42px;
+        }
+        .nav-active-pill img { width: 18px; height: 18px; }
+        .nav-active-pill span { font-family: 'Cambria', serif; font-size: 16px; color: var(--text-dark-brown); white-space: nowrap; }
 
         @media (min-width: 900px) {
             header { padding: 20px 50px; }
@@ -242,24 +298,25 @@
         </div>
 
         <div class="logo-container">
-            <img src="./assets/logo/logo-header.png" alt="Fawaz Fragrance">
+            <img src="logo.png" alt="Fawaz Fragrance">
         </div>
 
         <div class="header-right">
             <nav class="desktop-nav">
                 <a href="#">HOME</a>
-                <a href="#">COLLECTION</a>
+                <a href="collection.html">COLLECTION</a>
                 <a href="#">ABOUT</a>
                 <a href="#">CONTACT</a>
             </nav>
-            <button class="header-icon-btn">
-                <img src="./assets/icons/kallu-cart.svg" alt="Cart" class="icon-img bag-icon-header">
+            <button class="header-icon-btn" onclick="window.location.href='cart.html'">
+                <img src="./assets/icons/cart-icon.svg" alt="Cart" class="icon-img bag-icon-header">
+                <span class="cart-badge" id="headerCartBadge">0</span>
             </button>
         </div>
 
         <div class="mobile-menu" id="mobileMenu">
             <a href="#">Home</a>
-            <a href="#">Collection</a>
+            <a href="collection.html">Collection</a>
             <a href="#">About</a>
             <a href="#">Contact</a>
         </div>
@@ -284,11 +341,11 @@
     </div>
 
     <main class="hero-section">
-        <img src="./assets/Banner.png" alt="Perfume Bottle" class="hero-image">
+        <img src="hero-image.jpg" alt="Perfume Bottle" class="hero-image">
         <div class="hero-text-content">
             <h1>Elegance Crafted<br>to Linger.</h1>
             <p class="subtext">Timeless fragrances for refined tastes.</p>
-            <a href="#" class="cta-button">Explore the Range</a>
+            <a href="collection.html" class="cta-button">Explore the Range</a>
             <div class="brand-message-box">
                 <p>At Fawaz Fragrance, every scent is composed with precision, passion, and purpose.</p>
             </div>
@@ -301,20 +358,20 @@
             <p>Artisanal fragrances, crafted with care</p>
         </div>
         <div class="product-grid">
-            <div class="range-card">
-                <div class="range-image-container"><img src="./products/Ameer Al Oud.png" alt="Men"></div>
+            <div class="range-card" onclick="window.location.href='collection.html'">
+                <div class="range-image-container"><img src="p1.jpg" alt="Men"></div>
                 <div class="range-label">Men</div>
             </div>
-            <div class="range-card">
-                <div class="range-image-container"><img src="./products/Only Mine.png" alt="Women"></div>
+            <div class="range-card" onclick="window.location.href='collection.html'">
+                <div class="range-image-container"><img src="p2.jpg" alt="Women"></div>
                 <div class="range-label">Women</div>
             </div>
-            <div class="range-card">
-                <div class="range-image-container"><img src="./products/Kayali Apple.png" alt="Unisex"></div>
+            <div class="range-card" onclick="window.location.href='collection.html'">
+                <div class="range-image-container"><img src="p3.jpg" alt="Unisex"></div>
                 <div class="range-label">Unisex</div>
             </div>
-            <div class="range-card">
-                <div class="range-image-container"><img src="./products/Polo Blue.png" alt="Attar"></div>
+            <div class="range-card" onclick="window.location.href='collection.html'">
+                <div class="range-image-container"><img src="p4.jpg" alt="Attar"></div>
                 <div class="range-label">Attar</div>
             </div>
         </div>
@@ -326,56 +383,61 @@
             <p>Artisanal fragrances, crafted with care</p>
         </div>
         <div class="product-grid">
-            <div class="shop-card">
-                <div class="shop-image-container"><img src="./products/Burberry Weekend.png" alt="Burberry Weekend"></div>
-                <div class="shop-details">
-                    <div class="text-group">
-                        <div class="product-name">Burberry Weekend</div>
-                        <div class="price-container">₹150 <span class="original-price">₹175</span></div>
-                    </div>
-                    <button class="add-to-cart-btn">
-                        <img src="./assets/icons/gora-cart.svg" alt="Add to Cart">
-                    </button>
-                </div>
-            </div>
-            <div class="shop-card">
-                <div class="shop-image-container"><img src="./products/Oud Kashmiri.png" alt="Oud Kashmiri"></div>
+            
+            <div class="shop-card" onclick="window.location.href='product-detail.html?id=oud_kashmiri'">
+                <div class="shop-image-container"><img src="p1.jpg" alt="Oud Kashmiri"></div>
                 <div class="shop-details">
                     <div class="text-group">
                         <div class="product-name">Oud Kashmiri</div>
                         <div class="price-container">₹150 <span class="original-price">₹175</span></div>
                     </div>
-                    <button class="add-to-cart-btn">
-                        <img src="./assets/icons/gora-cart.svg" alt="Add to Cart">
+                    <button class="add-to-cart-btn" onclick="addToCart('oud_kashmiri', 'Oud Kashmiri', 159, 'p1.jpg', 'Warm, Sweet & Elegant')">
+                        <img src="./assets/icons/add-to-cart-icon.svg" alt="Add to Cart">
                     </button>
                 </div>
             </div>
-            <div class="shop-card">
-                <div class="shop-image-container"><img src="./products/D Blue.png" alt="D Blue"></div>
+
+            <div class="shop-card" onclick="window.location.href='product-detail.html?id=rose_musk'">
+                <div class="shop-image-container"><img src="p2.jpg" alt="Rose Musk"></div>
                 <div class="shop-details">
                     <div class="text-group">
-                        <div class="product-name">D Blue.png</div>
+                        <div class="product-name">Rose Musk</div>
                         <div class="price-container">₹150 <span class="original-price">₹175</span></div>
                     </div>
-                    <button class="add-to-cart-btn">
-                        <img src="./assets/icons/gora-cart.svg" alt="Add to Cart">
+                    <button class="add-to-cart-btn" onclick="addToCart('rose_musk', 'Rose Musk', 159, 'p2.jpg', 'Elegant & Floral')">
+                        <img src="./assets/icons/add-to-cart-icon.svg" alt="Add to Cart">
                     </button>
                 </div>
             </div>
-            <div class="shop-card">
-                <div class="shop-image-container"><img src="./products/Musk Rose.png" alt="Musk Rose"></div>
+
+            <div class="shop-card" onclick="window.location.href='product-detail.html?id=ameen_special'">
+                <div class="shop-image-container"><img src="p3.jpg" alt="Ameen Special"></div>
                 <div class="shop-details">
                     <div class="text-group">
-                        <div class="product-name">Musk Rose</div>
+                        <div class="product-name">Ameen Special</div>
                         <div class="price-container">₹150 <span class="original-price">₹175</span></div>
                     </div>
-                    <button class="add-to-cart-btn">
-                        <img src="./assets/icons/gora-cart.svg" alt="Add to Cart">
+                    <button class="add-to-cart-btn" onclick="addToCart('ameen_special', 'Ameen Special', 159, 'p3.jpg', 'Signature Scent')">
+                        <img src="./assets/icons/add-to-cart-icon.svg" alt="Add to Cart">
                     </button>
                 </div>
             </div>
+
+            <div class="shop-card" onclick="window.location.href='product-detail.html?id=nafis_gold'">
+                <div class="shop-image-container"><img src="p4.jpg" alt="Nafis Gold"></div>
+                <div class="shop-details">
+                    <div class="text-group">
+                        <div class="product-name">Nafis Gold</div>
+                        <div class="price-container">₹150 <span class="original-price">₹175</span></div>
+                    </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('nafis_gold', 'Nafis Gold', 159, 'p4.jpg', 'Pure Luxury')">
+                        <img src="./assets/icons/add-to-cart-icon.svg" alt="Add to Cart">
+                    </button>
+                </div>
+            </div>
+
         </div>
-        <a href="#" class="view-all-btn">View All Categories</a>
+        <a href="collection.html" class="view-all-btn">View All Categories</a>
     </section>
 
     <div class="features-container">
@@ -403,7 +465,7 @@
         <div class="footer-wrapper-desktop">
             <div class="footer-col-1">
                 <div class="footer-logo">
-                    <img src="./assets/logo/footer-logo.png" alt="Fawaz Fragrance Footer">
+                    <img src="footer-logo.png" alt="Fawaz Fragrance Footer">
                 </div>
                 <hr class="footer-divider">
                 <div class="footer-section">
@@ -419,10 +481,10 @@
                 <div class="footer-section">
                     <h3 class="footer-heading">Customer Service</h3>
                     <div class="contact-grid">
-                        <div class="contact-row"><img src="./assets/icons/phone.svg" class="contact-icon-img" alt="phone"><span class="footer-link">+91 9004263544</span></div>
-                        <div class="contact-row"><img src="./assets/icons/mail.svg" class="contact-icon-img" alt="email"><span class="footer-link">fawazfragrance@gmail.com</span></div>
-                        <div class="contact-row"><img src="./assets/icons/clock.svg" class="contact-icon-img" alt="time"><span class="footer-link">Mon-Fri: 9AM–6PM IST</span></div>
-                        <div class="contact-row"><img src="./assets/icons/whatsapp.svg" class="contact-icon-img" alt="chat"><span class="footer-link">Chat with us on Whatsapp</span></div>
+                        <div class="contact-row"><img src="phone-icon.png" class="contact-icon-img" alt="phone"><span class="footer-link">+91 9004263544</span></div>
+                        <div class="contact-row"><img src="email-icon.png" class="contact-icon-img" alt="email"><span class="footer-link">fawazfragrance@gmail.com</span></div>
+                        <div class="contact-row"><img src="clock-icon.png" class="contact-icon-img" alt="time"><span class="footer-link">Mon-Fri: 9AM–6PM IST</span></div>
+                        <div class="contact-row"><img src="whatsapp-icon.png" class="contact-icon-img" alt="chat"><span class="footer-link">Chat with us on Whatsapp</span></div>
                     </div>
                 </div>
             </div>
@@ -436,9 +498,9 @@
                     <h4>Subscribe to get special offers, exclusive launches, and fragrance tips</h4>
                     <div class="input-group"><input type="email" placeholder="Email" class="footer-input"><button class="footer-btn">Subscribe</button></div>
                     <div class="social-icons">
-                        <img src="./assets/icons/instagram.svg" class="social-icon-img" alt="Instagram">
-                        <img src="./assets/icons/facebook.svg" class="social-icon-img" alt="Facebook">
-                        <img src="./assets/icons/pinterest.svg" class="social-icon-img" alt="Pinterest">
+                        <img src="social-insta.png" class="social-icon-img" alt="Instagram">
+                        <img src="social-fb.png" class="social-icon-img" alt="Facebook">
+                        <img src="social-pin.png" class="social-icon-img" alt="Pinterest">
                     </div>
                 </div>
             </div>
@@ -448,12 +510,23 @@
             &copy; 2025 Fawaz Fragrance. All rights reserved.<br>Crafted by Eaz Nexora
         </div>
 
-        <div class="bottom-nav-selector">
-            <button class="nav-item active"><span>Home</span></button>
-            <button class="nav-icon-btn"><img src="nav-perfume.png" class="nav-icon-img" alt="Perfume"></button>
-            <button class="nav-icon-btn"><img src="nav-bag.png" class="nav-icon-img" alt="Bag"></button>
+        <div class="bottom-nav-pill">
+            <div class="nav-active-pill">
+              <span>Home</span>
+            </div>
+            
+            <a href="collection.html" class="nav-circle-btn">
+                <img src="./assets/icons/home-icon-filled.svg" alt="Home">
+            </a>
+
+            <a href="cart.html" class="nav-circle-btn">
+                <img src="./assets/icons/cart-icon.svg" alt="Bag">
+                <span class="cart-badge" id="navCartBadge">0</span>
+            </a>
         </div>
     </footer>
+
+    <div id="toast-notification">Added to Cart</div>
 
     <script>
         // 1. HAMBURGER LOGIC
@@ -473,16 +546,7 @@
             }
         });
 
-        document.addEventListener('click', function(event) {
-            const menu = document.getElementById("mobileMenu");
-            const btn = document.getElementById("menuBtn");
-            if (!menu.contains(event.target) && !btn.contains(event.target) && menu.classList.contains('active')) {
-                menu.classList.remove('active');
-                btn.classList.remove('active');
-            }
-        });
-
-        // 2. SEARCH & SCROLL LOGIC
+        // 2. SEARCH LOGIC
         let isAutoScrolling = false;
 
         function toggleSearch() {
@@ -512,17 +576,6 @@
             }
         });
 
-        window.addEventListener("scroll", function() {
-            const overlay = document.getElementById("searchOverlay");
-            const searchInput = overlay.querySelector('.search-bar-input');
-
-            if (overlay.classList.contains("active") && !isAutoScrolling) {
-                if (searchInput.value.trim() === "") {
-                    overlay.classList.remove("active");
-                }
-            }
-        });
-
         // 3. HEADER SCROLL LOGIC
         let lastScrollTop = 0;
         const header = document.getElementById("mainHeader");
@@ -536,12 +589,65 @@
             }
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
         });
+
+        // 4. BADGE UPDATE LOGIC
+        function updateCartBadges() {
+            let cart = JSON.parse(localStorage.getItem('fawazCart')) || [];
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            const badges = document.querySelectorAll('.cart-badge');
+            badges.forEach(badge => {
+                if (totalCount > 0) {
+                    badge.style.display = 'flex';
+                    badge.innerText = totalCount;
+                } else {
+                    badge.style.display = 'none';
+                }
+            });
+        }
+
+        // 5. TOAST LOGIC
+        function showToast(message) {
+            var toast = document.getElementById("toast-notification");
+            toast.innerText = message;
+            toast.className = "show"; // Make visible
+            
+            // Hide after 3 seconds
+            setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 3000);
+        }
+
+        // 6. ADD TO CART LOGIC
+        function addToCart(id, name, price, img, tagline) {
+            if (event) event.stopPropagation(); 
+            
+            let cart = JSON.parse(localStorage.getItem('fawazCart')) || [];
+            
+            let existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1; 
+            } else {
+                cart.push({
+                    id: id,
+                    name: name,
+                    price: Number(price), // Numeric price
+                    img: img,
+                    tagline: tagline,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('fawazCart', JSON.stringify(cart));
+            updateCartBadges(); // Update badge instantly
+            
+            // Show Toast instead of Alert
+            showToast(name + " added to your cart!");
+        }
+
+        // Initialize badges on load
+        document.addEventListener('DOMContentLoaded', updateCartBadges);
     </script>
 </body>
 </html>
-
-
-
-
-
-
