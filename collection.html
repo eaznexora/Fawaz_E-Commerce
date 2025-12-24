@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+  <link rel="icon" href="Favicon.png" type="image/png">
     
     <style>
         /* --- COLOR PALETTE --- */
@@ -321,18 +323,18 @@
         </div>
 
         <div class="logo-container">
-            <img src="logo.png" alt="Fawaz Fragrance">
+            <img src="./assets/logo/logo-header.png" alt="Fawaz Fragrance">
         </div>
 
         <div class="header-right">
             <nav class="desktop-nav">
                 <a href="index.html">HOME</a>
-                <a href="#">COLLECTION</a>
+                <a href="collection.html" class="active">COLLECTION</a>
                 <a href="#">ABOUT</a>
                 <a href="#">CONTACT</a>
             </nav>
             <button class="header-icon-btn" onclick="window.location.href='cart.html'">
-                <img src="./assets/icons/cart-icon.svg" alt="Cart" class="icon-img bag-icon-header">
+                <img src="./assets/icons/kallu-cart.svg" alt="Cart" class="icon-img bag-icon-header">
                 <span class="cart-badge" id="headerCartBadge">0</span>
             </button>
         </div>
@@ -362,54 +364,54 @@
 
         <div class="product-grid" id="productGrid">
             
-            <div class="shop-card" data-category="men" onclick="window.location.href='product-detail.html?id=oud_kashmiri'">
-                <div class="shop-image-container"><img src="p1.jpg" alt="Oud Kashmiri"></div>
+            <div class="shop-card" data-category="men" onclick="window.location.href='product-detail.html?id=Burberry Weekend'">
+                <div class="shop-image-container"><img src="./products/Burberry Weekend.png" alt="Burberry Weekend"></div>
                 <div class="shop-details">
                     <div class="text-group">
-                        <div class="product-name">Oud Kashmiri</div>
+                        <div class="product-name">Burberry Weekend</div>
                         <div class="price-container">₹150 <span class="original-price">₹175</span></div>
                     </div>
-                    <button class="card-cart-btn" onclick="addToCart('oud_kashmiri', 'Oud Kashmiri', 159, 'p1.jpg', 'Warm, Sweet & Elegant')">
-                       <img src="./assets/icons/add-to-cart-icon.svg" alt="Add" class="card-cart-icon">
+                    <button class="card-cart-btn" onclick="addToCart('Burberry Weekend', 'Oud Kashmiri', 159, './products/Burberry Weekend.png', 'Warm, Sweet & Elegant')">
+                       <img src="./assets/icons/kallu-cart.svg" alt="Add" class="card-cart-icon">
                     </button>
                 </div>
             </div>
 
             <div class="shop-card" data-category="women" onclick="window.location.href='product-detail.html?id=rose_musk'">
-                <div class="shop-image-container"><img src="p2.jpg" alt="Rose Musk"></div>
+                <div class="shop-image-container"><img src="./products/Oud Kashmiri.png" alt="Oud Kashmiri"></div>
                 <div class="shop-details">
                     <div class="text-group">
-                        <div class="product-name">Rose Musk</div>
+                        <div class="product-name">Oud Kashmiri</div>
                         <div class="price-container">₹150 <span class="original-price">₹175</span></div>
                     </div>
-                    <button class="card-cart-btn" onclick="addToCart('rose_musk', 'Rose Musk', 159, 'p2.jpg', 'Elegant & Floral')">
-                        <img src="./assets/icons/add-to-cart-icon.svg" alt="Add" class="card-cart-icon">
+                    <button class="card-cart-btn" onclick="addToCart('rose_musk', 'Oud Kashmiri', 159, './products/Oud Kashmiri.png', 'Elegant & Floral')">
+                        <img src="./assets/icons/kallu-cart.svg" alt="Add" class="card-cart-icon">
                     </button>
                 </div>
             </div>
 
             <div class="shop-card" data-category="ameen" onclick="window.location.href='product-detail.html?id=ameen_special'">
-                <div class="shop-image-container"><img src="p3.jpg" alt="Ameen Special"></div>
+                <div class="shop-image-container"><img src="./products/D Blue.png" alt="D Blue"></div>
                 <div class="shop-details">
                     <div class="text-group">
-                        <div class="product-name">Ameen Special</div>
+                        <div class="product-name">D Blue</div>
                         <div class="price-container">₹150 <span class="original-price">₹175</span></div>
                     </div>
-                    <button class="card-cart-btn" onclick="addToCart('ameen_special', 'Ameen Special', 159, 'p3.jpg', 'Signature Scent')">
-                        <img src="./assets/icons/add-to-cart-icon.svg" alt="Add" class="card-cart-icon">
+                    <button class="card-cart-btn" onclick="addToCart('ameen_special', 'D Blue', 159, './products/D Blue.png', 'Signature Scent')">
+                        <img src="./assets/icons/kallu-cart.svg" alt="Add" class="card-cart-icon">
                     </button>
                 </div>
             </div>
 
             <div class="shop-card" data-category="nafis" onclick="window.location.href='product-detail.html?id=nafis_gold'">
-                <div class="shop-image-container"><img src="p4.jpg" alt="Nafis Gold"></div>
+                <div class="shop-image-container"><img src="./products/Musk Rose.png" alt="Musk Rose"></div>
                 <div class="shop-details">
                     <div class="text-group">
-                        <div class="product-name">Nafis Gold</div>
+                        <div class="product-name">Musk Rose</div>
                         <div class="price-container">₹150 <span class="original-price">₹175</span></div>
                     </div>
-                    <button class="card-cart-btn" onclick="addToCart('nafis_gold', 'Nafis Gold', 159, 'p4.jpg', 'Pure Luxury')">
-                        <img src="./assets/icons/add-to-cart-icon.svg" alt="Add" class="card-cart-icon">
+                    <button class="card-cart-btn" onclick="addToCart('nafis_gold', 'Musk Rose', 159, './products/Musk Rose.png', 'Pure Luxury')">
+                        <img src="./assets/icons/kallu-cart.svg" alt="Add" class="card-cart-icon">
                     </button>
                 </div>
             </div>
@@ -422,7 +424,7 @@
     <footer>
         <div class="footer-wrapper-desktop">
             <div class="footer-col-1">
-                <div class="footer-logo"><img src="footer-logo.png" alt="Logo"></div>
+                <div class="footer-logo"><img src="./assets/logo/footer-logo.png" alt="Logo"></div>
                 <hr class="footer-divider">
                 <div class="footer-section">
                     <h3 class="footer-heading">Shop</h3>
@@ -435,10 +437,10 @@
                 <div class="footer-section">
                     <h3 class="footer-heading">Customer Service</h3>
                     <div class="contact-grid">
-                        <div class="contact-row"><img src="phone-icon.png" class="contact-icon-img"><span class="footer-link">+91 9004263544</span></div>
-                        <div class="contact-row"><img src="email-icon.png" class="contact-icon-img"><span class="footer-link">fawazfragrance@gmail.com</span></div>
-                        <div class="contact-row"><img src="clock-icon.png" class="contact-icon-img"><span class="footer-link">Mon-Fri: 9AM–6PM IST</span></div>
-                        <div class="contact-row"><img src="whatsapp-icon.png" class="contact-icon-img"><span class="footer-link">Chat with us</span></div>
+                        <div class="contact-row"><img src="./assets/icons/phone.svg" class="contact-icon-img"><span class="footer-link">+91 9004263544</span></div>
+                        <div class="contact-row"><img src="./assets/icons/mail.svg"  class="contact-icon-img"><span class="footer-link">fawazfragrance@gmail.com</span></div>
+                        <div class="contact-row"><img src="./assets/icons/clock.svg" class="contact-icon-img"><span class="footer-link">Mon-Fri: 9AM–6PM IST</span></div>
+                        <div class="contact-row"><img src="./assets/icons/whatsapp.svg" class="contact-icon-img"><span class="footer-link">Chat with us</span></div>
                     </div>
                 </div>
             </div>
@@ -452,7 +454,7 @@
                     <h4>Subscribe to get special offers, exclusive launches, and fragrance tips</h4>
                     <div class="input-group"><input type="email" placeholder="Email" class="footer-input"><button class="footer-btn">Subscribe</button></div>
                     <div class="social-icons">
-                        <img src="social-insta.png" class="social-icon-img"><img src="social-fb.png" class="social-icon-img"><img src="social-pin.png" class="social-icon-img">
+                        <img src="./assets/icons/instagram.svg" class="social-icon-img"><img src="./assets/icons/facebook.svg" class="social-icon-img"><img src="./assets/icons/pinterest.svg" class="social-icon-img">
                     </div>
                 </div>
             </div>
@@ -549,7 +551,7 @@
 
         // FAKE DATA FOR SUGGESTIONS
         const suggestionsData = [
-            "Oud Kashmiri", "Rose Musk", "Ameen Special", "Nafis Gold",
+            "Oud Kashmiri", "Oud Kashmiri", "D Blue", "Musk Rose",
             "Attar for men", "Long lasting perfume", "Alcohol free fragrance",
             "Gift set for her", "Musk collection", "Premium Oud"
         ];
