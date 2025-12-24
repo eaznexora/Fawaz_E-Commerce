@@ -7,6 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+  <link rel="icon" href="Favicon.png" type="image/png">
+  
     <style>
         /* --- COLOR PALETTE --- */
         :root {
@@ -298,24 +301,24 @@
         </div>
 
         <div class="logo-container">
-            <img src="logo.png" alt="Fawaz Fragrance">
+            <img src="./assets/logo/logo-header.png" alt="Fawaz Fragrance">
         </div>
 
         <div class="header-right">
             <nav class="desktop-nav">
-                <a href="#">HOME</a>
+                <a href="index.html" class="active">HOME</a>
                 <a href="collection.html">COLLECTION</a>
                 <a href="#">ABOUT</a>
                 <a href="#">CONTACT</a>
             </nav>
             <button class="header-icon-btn" onclick="window.location.href='cart.html'">
-                <img src="./assets/icons/cart-icon.svg" alt="Cart" class="icon-img bag-icon-header">
+                <img src="./assets/icons/kallu-cart.svg" alt="Cart" class="icon-img bag-icon-header">
                 <span class="cart-badge" id="headerCartBadge">0</span>
             </button>
         </div>
 
         <div class="mobile-menu" id="mobileMenu">
-            <a href="#">Home</a>
+            <a href="index.html" class="active">Home</a>
             <a href="collection.html">Collection</a>
             <a href="#">About</a>
             <a href="#">Contact</a>
@@ -341,7 +344,7 @@
     </div>
 
     <main class="hero-section">
-        <img src="hero-image.jpg" alt="Perfume Bottle" class="hero-image">
+        <img src="./assets/Banner.png" alt="Perfume Bottle" class="hero-image">
         <div class="hero-text-content">
             <h1>Elegance Crafted<br>to Linger.</h1>
             <p class="subtext">Timeless fragrances for refined tastes.</p>
@@ -359,19 +362,19 @@
         </div>
         <div class="product-grid">
             <div class="range-card" onclick="window.location.href='collection.html'">
-                <div class="range-image-container"><img src="p1.jpg" alt="Men"></div>
+                <div class="range-image-container"><img src="./products/Ameer Al Oud.png" alt="Men"></div>
                 <div class="range-label">Men</div>
             </div>
             <div class="range-card" onclick="window.location.href='collection.html'">
-                <div class="range-image-container"><img src="p2.jpg" alt="Women"></div>
+                <div class="range-image-container"><img src="./products/Only Mine.png" alt="Women"></div>
                 <div class="range-label">Women</div>
             </div>
             <div class="range-card" onclick="window.location.href='collection.html'">
-                <div class="range-image-container"><img src="p3.jpg" alt="Unisex"></div>
+                <div class="range-image-container"><img src="./products/Kayali Apple.png" alt="Unisex"></div>
                 <div class="range-label">Unisex</div>
             </div>
             <div class="range-card" onclick="window.location.href='collection.html'">
-                <div class="range-image-container"><img src="p4.jpg" alt="Attar"></div>
+                <div class="range-image-container"><img src="./products/Polo Blue.png" alt="Attar"></div>
                 <div class="range-label">Attar</div>
             </div>
         </div>
@@ -384,54 +387,54 @@
         </div>
         <div class="product-grid">
             
-            <div class="shop-card" onclick="window.location.href='product-detail.html?id=oud_kashmiri'">
-                <div class="shop-image-container"><img src="p1.jpg" alt="Oud Kashmiri"></div>
+            <div class="shop-card" onclick="window.location.href='product-detail.html?id=Burberry Weekend'">
+                <div class="shop-image-container"><img src="./products/Burberry Weekend.png" alt="Burberry Weekend"></div>
                 <div class="shop-details">
                     <div class="text-group">
-                        <div class="product-name">Oud Kashmiri</div>
+                        <div class="product-name">Burberry Weekend</div>
                         <div class="price-container">₹150 <span class="original-price">₹175</span></div>
                     </div>
-                    <button class="add-to-cart-btn" onclick="addToCart('oud_kashmiri', 'Oud Kashmiri', 159, 'p1.jpg', 'Warm, Sweet & Elegant')">
-                        <img src="./assets/icons/add-to-cart-icon.svg" alt="Add to Cart">
+                    <button class="add-to-cart-btn" onclick="addToCart('Burberry Weekend', 'Burberry Weekend', 159, './products/Burberry Weekend.png', 'Warm, Sweet & Elegant')">
+                        <img src="./assets/icons/gora-cart.svg" alt="Add to Cart">
                     </button>
                 </div>
             </div>
 
             <div class="shop-card" onclick="window.location.href='product-detail.html?id=rose_musk'">
-                <div class="shop-image-container"><img src="p2.jpg" alt="Rose Musk"></div>
+                <div class="shop-image-container"><img src="./products/Oud Kashmiri.png" alt="Oud Kashmiri"></div>
                 <div class="shop-details">
                     <div class="text-group">
-                        <div class="product-name">Rose Musk</div>
+                        <div class="product-name">Oud Kashmiri</div>
                         <div class="price-container">₹150 <span class="original-price">₹175</span></div>
                     </div>
-                    <button class="add-to-cart-btn" onclick="addToCart('rose_musk', 'Rose Musk', 159, 'p2.jpg', 'Elegant & Floral')">
-                        <img src="./assets/icons/add-to-cart-icon.svg" alt="Add to Cart">
+                    <button class="add-to-cart-btn" onclick="addToCart('rose_musk', 'Oud Kashmiri', 159, './products/Oud Kashmiri.png', 'Elegant & Floral')">
+                        <img src="./assets/icons/gora-cart.svg" alt="Add to Cart">
                     </button>
                 </div>
             </div>
 
             <div class="shop-card" onclick="window.location.href='product-detail.html?id=ameen_special'">
-                <div class="shop-image-container"><img src="p3.jpg" alt="Ameen Special"></div>
+                <div class="shop-image-container"><img src="./products/D Blue.png" alt="D Blue"></div>
                 <div class="shop-details">
                     <div class="text-group">
-                        <div class="product-name">Ameen Special</div>
+                        <div class="product-name">D Blue</div>
                         <div class="price-container">₹150 <span class="original-price">₹175</span></div>
                     </div>
-                    <button class="add-to-cart-btn" onclick="addToCart('ameen_special', 'Ameen Special', 159, 'p3.jpg', 'Signature Scent')">
-                        <img src="./assets/icons/add-to-cart-icon.svg" alt="Add to Cart">
+                    <button class="add-to-cart-btn" onclick="addToCart('ameen_special', 'D Blue', 159, './products/D Blue.png', 'Signature Scent')">
+                        <img src="./assets/icons/gora-cart.svg" alt="Add to Cart">
                     </button>
                 </div>
             </div>
 
             <div class="shop-card" onclick="window.location.href='product-detail.html?id=nafis_gold'">
-                <div class="shop-image-container"><img src="p4.jpg" alt="Nafis Gold"></div>
+                <div class="shop-image-container"><img src="./products/Musk Rose.png" alt="Musk Rose"></div>
                 <div class="shop-details">
                     <div class="text-group">
-                        <div class="product-name">Nafis Gold</div>
+                        <div class="product-name">Musk Rose</div>
                         <div class="price-container">₹150 <span class="original-price">₹175</span></div>
                     </div>
-                    <button class="add-to-cart-btn" onclick="addToCart('nafis_gold', 'Nafis Gold', 159, 'p4.jpg', 'Pure Luxury')">
-                        <img src="./assets/icons/add-to-cart-icon.svg" alt="Add to Cart">
+                    <button class="add-to-cart-btn" onclick="addToCart('nafis_gold', 'Musk Rose', 159, './products/Musk Rose.png', 'Pure Luxury')">
+                        <img src="./assets/icons/gora-cart.svg" alt="Add to Cart">
                     </button>
                 </div>
             </div>
@@ -465,7 +468,7 @@
         <div class="footer-wrapper-desktop">
             <div class="footer-col-1">
                 <div class="footer-logo">
-                    <img src="footer-logo.png" alt="Fawaz Fragrance Footer">
+                    <img src="./assets/logo/footer-logo.png" alt="Fawaz Fragrance Footer">
                 </div>
                 <hr class="footer-divider">
                 <div class="footer-section">
@@ -481,10 +484,10 @@
                 <div class="footer-section">
                     <h3 class="footer-heading">Customer Service</h3>
                     <div class="contact-grid">
-                        <div class="contact-row"><img src="phone-icon.png" class="contact-icon-img" alt="phone"><span class="footer-link">+91 9004263544</span></div>
-                        <div class="contact-row"><img src="email-icon.png" class="contact-icon-img" alt="email"><span class="footer-link">fawazfragrance@gmail.com</span></div>
-                        <div class="contact-row"><img src="clock-icon.png" class="contact-icon-img" alt="time"><span class="footer-link">Mon-Fri: 9AM–6PM IST</span></div>
-                        <div class="contact-row"><img src="whatsapp-icon.png" class="contact-icon-img" alt="chat"><span class="footer-link">Chat with us on Whatsapp</span></div>
+                        <div class="contact-row"><img src="./assets/icons/phone.svg" class="contact-icon-img" alt="phone"><span class="footer-link">+91 9004263544</span></div>
+                        <div class="contact-row"><img src="./assets/icons/mail.svg" class="contact-icon-img" alt="email"><span class="footer-link">fawazfragrance@gmail.com</span></div>
+                        <div class="contact-row"><img src="./assets/icons/clock.svg" class="contact-icon-img" alt="time"><span class="footer-link">Mon-Fri: 9AM–6PM IST</span></div>
+                        <div class="contact-row"><img src="./assets/icons/whatsapp.svg" class="contact-icon-img" alt="chat"><span class="footer-link">Chat with us on Whatsapp</span></div>
                     </div>
                 </div>
             </div>
@@ -498,9 +501,9 @@
                     <h4>Subscribe to get special offers, exclusive launches, and fragrance tips</h4>
                     <div class="input-group"><input type="email" placeholder="Email" class="footer-input"><button class="footer-btn">Subscribe</button></div>
                     <div class="social-icons">
-                        <img src="social-insta.png" class="social-icon-img" alt="Instagram">
-                        <img src="social-fb.png" class="social-icon-img" alt="Facebook">
-                        <img src="social-pin.png" class="social-icon-img" alt="Pinterest">
+                        <img src="./assets/icons/instagram.svg" class="social-icon-img" alt="Instagram">
+                        <img src="./assets/icons/facebook.svg" class="social-icon-img" alt="Facebook">
+                        <img src="./assets/icons/pinterest.svg" class="social-icon-img" alt="Pinterest">
                     </div>
                 </div>
             </div>
@@ -520,7 +523,7 @@
             </a>
 
             <a href="cart.html" class="nav-circle-btn">
-                <img src="./assets/icons/cart-icon.svg" alt="Bag">
+                <img src="./assets/icons/gora-cart.svg" alt="Bag">
                 <span class="cart-badge" id="navCartBadge">0</span>
             </a>
         </div>
