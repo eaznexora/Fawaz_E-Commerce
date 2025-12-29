@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&display=swap" rel="stylesheet">
-    <!-- Favicon -->
-  <link rel="icon" href="Favicon.png" type="image/png">
     
     <style>
         /* --- CORE STYLES --- */
@@ -70,6 +69,8 @@
             width: 100%; padding: 15px; border-radius: 30px; border: none;
             background: #A68B6C; color: white; font-weight: 600; font-family: 'Baskervville', serif;
             cursor: pointer; box-shadow: 0 4px 10px rgba(166, 139, 108, 0.3);
+            text-align: center;
+            text-decoration: none;
         }
 
         /* --- BOTTOM NAV (Matches your design) --- */
@@ -113,20 +114,20 @@
         <div id="emptyCartMsg">Your cart is empty.</div>
 
         <div class="cart-actions" id="cartActions">
-            <a href="collection.html" class="btn-outline">Continue Shopping</a>
-            <button class="btn-filled" onclick="alert('Proceeding to Checkout!')">Checkout Now</button>
+            <a class='btn-outline' href='/collection'>Continue Shopping</a>
+            <a class='btn-filled' href='/checkout'>Checkout Now</a>
         </div>
     </div>
 
     <div class="bottom-nav-pill">
-        <a href="index.html" class="nav-circle-btn">
+        <a class='nav-circle-btn' href='/'>
             <img src="./assets/icons/home-icon-filled.svg" alt="Home">
         </a>
-        <a href="collection.html" class="nav-circle-btn">
+        <a class='nav-circle-btn' href='/collection'>
              <img src="./assets/icons/shopping-bag.svg" alt="Bag">
         </a>
         <div class="nav-active-pill">
-            <img src="./assets/icons/kallu-cart.svg" alt="Cart">
+            <img src="./assets/icons/cart-icon.svg" alt="Cart">
             <span>Cart</span>
         </div>
     </div>
