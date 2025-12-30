@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Fawaz Fragrance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="icon" href="Favicon.png" type="image/png">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <style>
+        /* --- COLOR PALETTE (Global Design System) --- */
+        :root {
+            --bg-cream: #F8F5F0;        
+            --text-dark-brown: #3E2B26; 
+            --bar-brown: #A68B6C;       
+            --btn-gold: #BCA380;        
+            --btn-beige: #A68B6C;       
+            --box-beige: #F4EFE6;       
+            --icon-circle-bg: #E3D9C8;  
+            --btn-text: #FFFFFF;
+            --footer-bg: #5B3E36;       
+            --footer-text: #F8F5F0;     
+            --footer-line: rgba(248, 245, 240, 0.2); 
+            --nav-pill-dark: #BCA380;
+            --nav-item-light: #DBCDBA; 
+        }
+
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-dark-brown);
+            font-family: 'Cambria', serif;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER STYLES --- */
+        header {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 15px 25px;
+            background-color: var(--bg-cream);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: top 0.4s ease-in-out;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        header.nav-up { top: -100px; }
+
+        .header-left { display: flex; align-items: center; gap: 25px; }
+        .logo-container img { height: 45px; display: block; padding-left: 25px; padding-bottom: 10px;}
+        .header-right { display: flex; align-items: center; justify-content: flex-end; }
+
+        .header-icon-btn { 
+            background: none; border: none; cursor: pointer; padding: 0; 
+            display: flex; align-items: center; justify-content: center;
+            position: relative; 
+        }
+        .icon-img { width: 24px; height: 24px; object-fit: contain; }
+        .search-icon-header { width: 22px; height: 22px; }
+        .bag-icon-header { width: 24px; height: 24px; }
+
+        .cart-badge {
+            position: absolute; top: -5px; right: -8px;
+            background-color: #D32F2F; color: white;
+            font-size: 10px; font-weight: bold; font-family: sans-serif;
+            width: 18px; height: 18px; border-radius: 50%;
+            display: none; align-items: center; justify-content: center;
+            border: 2px solid var(--bg-cream); z-index: 10;
+        }
+
+        /* --- SEARCH OVERLAY --- */
+        .search-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px; 
+            background-color: var(--bg-cream); display: flex; align-items: center; justify-content: center; 
+            padding: 0 20px; z-index: 1100;
+            transform: translateY(-100%); opacity: 0;
+            transition: transform 0.4s ease, opacity 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .search-overlay.active { transform: translateY(0); opacity: 1; }
+        .search-bar-input {
+            width: 80%; padding: 10px; border: none; border-bottom: 2px solid var(--bar-brown);
+            background: transparent; font-family: 'Cambria', serif; font-size: 18px; color: var(--text-dark-brown); outline: none;
+        }
+        .close-search-btn { font-size: 30px; background: none; border: none; color: var(--text-dark-brown); cursor: pointer; margin-left: 15px; }
+
+        /* --- HAMBURGER --- */
+        .hamburger-btn {
+            background: none; border: none; cursor: pointer; width: 24px; height: 18px; 
+            position: relative; display: flex; flex-direction: column; justify-content: space-between; z-index: 1001; padding: 0;
+        }
+        .hamburger-line {
+            width: 100%; height: 2px; background-color: var(--text-dark-brown); border-radius: 2px;
+            transition: all 0.3s ease-in-out; transform-origin: center;
+        }
+        .hamburger-btn.active .hamburger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger-btn.active .hamburger-line:nth-child(2) { opacity: 0; }
+        .hamburger-btn.active .hamburger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* --- NAVIGATION --- */
+        .desktop-nav { display: none; } 
+        .mobile-menu {
+            position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 100vw;
+            background-color: var(--bg-cream); text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-height: 0; opacity: 0; overflow: hidden;
+            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+            z-index: 999;
+        }
+        .mobile-menu.active { max-height: 400px; opacity: 1; border-bottom: 2px solid var(--bar-brown); }
+        .mobile-menu a {
+            display: block; padding: 20px; text-decoration: none; color: var(--text-dark-brown);
+            font-family: 'Cambria', serif; border-bottom: 1px solid rgba(62, 43, 38, 0.05); background-color: var(--bg-cream);
+        }
+        
+        @media (min-width: 900px) {
+            header { padding: 20px 50px; }
+            .logo-container img { height: 50px; }
+            .hamburger-btn { display: none; }
+            .mobile-menu { display: none; }
+            .desktop-nav { display: flex; gap: 40px; margin-right: 20px; }
+            .desktop-nav a { text-decoration: none; color: var(--text-dark-brown); font-family: 'Cambria', serif; font-size: 16px; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; }
+            .desktop-nav .active { color: var(--bar-brown); border-bottom: 1px solid var(--bar-brown); }
+        }
+
+        /* --- CONTACT SPECIFIC CONTENT --- */
+        .contact-main { 
+            padding: 120px 25px 80px 25px; /* Added top padding for fixed header */
+            max-width: 1100px; 
+            margin: 0 auto; 
+            flex: 1; /* Pushes footer down */
+        }
+        
+        .page-header { text-align: center; margin-bottom: 50px; }
+        .page-title { font-family: 'Baskervville', serif; font-size: 42px; margin-bottom: 10px; color: var(--text-dark-brown); }
+        .page-subtitle { font-size: 18px; opacity: 0.8; font-style: italic; }
+
+        .contact-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+        
+        @media (min-width: 900px) {
+            .contact-grid { grid-template-columns: 1fr 1.5fr; gap: 60px; }
+        }
+
+        /* Info Box */
+        .info-card { background-color: var(--box-beige); padding: 40px; border-radius: 20px; text-align: left; height: 100%; }
+        .info-item { margin-bottom: 30px; display: flex; align-items: flex-start; gap: 15px; }
+        .info-icon { width: 24px; height: 24px; margin-top: 3px; filter: brightness(0.4); } /* Darker icon */
+        .info-label { font-weight: 700; font-family: 'Baskervville', serif; font-size: 20px; margin-bottom: 5px; display: block; color: var(--bar-brown); }
+        .info-text { font-size: 16px; line-height: 1.6; opacity: 0.9; }
+
+        /* Form */
+        .contact-form { background-color: #fff; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 25px; }
+        .form-label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        .form-input, .form-textarea {
+            width: 100%; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; background-color: #FAFAFA;
+            font-family: 'Cambria', serif; font-size: 16px; outline: none; transition: all 0.3s;
+        }
+        .form-textarea { height: 150px; resize: vertical; }
+        .form-input:focus, .form-textarea:focus { border-color: var(--bar-brown); background-color: #fff; box-shadow: 0 0 0 3px rgba(166, 139, 108, 0.1); }
+        
+        .submit-btn {
+            width: 100%; padding: 18px; background-color: var(--bar-brown); color: white;
+            border: none; border-radius: 30px; font-family: 'Baskervville', serif; font-size: 18px;
+            cursor: pointer; transition: 0.3s; letter-spacing: 1px; text-transform: uppercase;
+        }
+        .submit-btn:hover { background-color: #8f7658; transform: translateY(-2px); }
+        .submit-btn:disabled { background-color: #ccc; cursor: not-allowed; }
+
+        /* --- FOOTER STYLES --- */
+        footer { background-color: var(--footer-bg); color: var(--footer-text); padding: 40px 20px 100px 20px; text-align: left; font-family: 'Cambria', serif; position: relative; margin-top: auto; }
+        .footer-logo { text-align: center; margin-bottom: 20px; }
+        .footer-logo img { height: 50px; display: inline-block; filter: brightness(0) invert(1); }
+        .footer-divider { border: 0; height: 1px; background: var(--footer-line); margin: 25px 0; }
+        .footer-heading { font-size: 18px; margin-bottom: 15px; font-weight: 500; }
+        .shop-links-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; margin-bottom: 25px; }
+        .footer-link { display: block; color: var(--footer-text); text-decoration: none; font-size: 14px; font-weight: 300; line-height: 1.6; }
+        .contact-grid-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; } /* Renamed to avoid conflict */
+        .contact-row { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 300; }
+        .contact-icon-img { width: 18px; height: 18px; object-fit: contain; filter: brightness(0) invert(1); }
+        .bulk-text { text-align: center; font-size: 14px; line-height: 1.5; max-width: 500px; margin: 0 auto; font-weight: 400; opacity: 0.9; }
+        .subscribe-box h4 { font-weight: 500; margin-bottom: 15px; font-size: 16px; }
+        .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        .footer-input { flex: 1; padding: 12px; border-radius: 4px; border: none; outline: none; font-family: 'Cambria', serif; }
+        .footer-btn { background-color: #8D7260; color: white; border: none; padding: 10px 25px; border-radius: 4px; cursor: pointer; font-family: 'Cambria', serif; }
+        .social-icons { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
+        .social-icon-img { width: 24px; height: 24px; object-fit: contain; filter: brightness(0) invert(1); }
+        .copyright-text { text-align: center; font-size: 12px; opacity: 0.7; margin-top: 10px; line-height: 1.6; }
+        
+        @media (min-width: 900px) {
+            footer { padding: 60px 50px 100px 50px; }
+            .footer-wrapper-desktop { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 50px; align-items: start; }
+            .bulk-text { text-align: left; margin: 0; }
+            .footer-logo { text-align: left; }
+        }
+
+        /* --- BOTTOM NAV PILL (FIXED) --- */
+        .bottom-nav-pill {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background-color: var(--nav-pill-dark); border-radius: 50px; padding: 10px 12px;
+            display: flex; align-items: center; gap: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 2000;
+        }
+        .nav-circle-btn {
+            width: 42px; height: 42px; border-radius: 50%; background-color: var(--nav-item-light);
+            display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: 0.3s;
+            position: relative;
+        }
+        .nav-circle-btn img { width: 20px; height: 20px; opacity: 0.6; }
+        .nav-active-pill { background-color: #FFFFFF; border-radius: 30px; padding: 8px 20px; display: flex; align-items: center; gap: 8px; height: 42px; }
+        .nav-active-pill img { width: 18px; height: 18px; }
+        .nav-active-pill span { font-family: 'Cambria', serif; font-size: 16px; color: var(--text-dark-brown); white-space: nowrap; }
+
+        /* Toast Notification */
+        #toast { visibility: hidden; min-width: 250px; background-color: #3E2B26; color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 3000; left: 50%; bottom: 100px; transform: translateX(-50%); opacity: 0; transition: opacity 0.5s, bottom 0.5s; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        #toast.show { visibility: visible; opacity: 1; bottom: 110px; }
+    </style>
+</head>
+<body>
+
+    <div class="search-overlay" id="searchOverlay">
+        <input type="text" class="search-bar-input" placeholder="Search fragrances...">
+        <button class="close-search-btn" onclick="toggleSearch()">×</button>
+    </div>
+
+    <header id="mainHeader">
+        <div class="header-left">
+            <button class="hamburger-btn" id="menuBtn" onclick="toggleMenu()">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <button class="header-icon-btn" onclick="toggleSearch()" id="searchBtn">
+                <img src="./assets/icons/search.svg" alt="Search" class="icon-img search-icon-header">
+            </button>
+        </div>
+
+        <div class="logo-container">
+            <a href="index.html"><img src="./assets/logo/logo-header.png" alt="Fawaz Fragrance"></a>
+        </div>
+
+        <div class="header-right">
+            <nav class="desktop-nav">
+                <a href="index.html">HOME</a>
+                <a href="collection.html">COLLECTION</a>
+                <a href="about.html">ABOUT</a>
+                <a href="contact.html" class="active">CONTACT</a>
+            </nav>
+            <button class="header-icon-btn" onclick="window.location.href='cart.html'">
+                <img src="./assets/icons/kallu-cart.svg" alt="Cart" class="icon-img bag-icon-header">
+                <span class="cart-badge" id="headerCartBadge">0</span>
+            </button>
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html">Home</a>
+            <a href="collection.html">Collection</a>
+            <a href="about.html">About</a>
+            <a href="contact.html" style="color:var(--bar-brown); font-weight:bold;">Contact</a>
+        </div>
+    </header>
+
+    <div class="contact-main">
+        <div class="page-header">
+            <h1 class="page-title">Get in Touch</h1>
+            <p class="page-subtitle">We would love to hear from you.</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="info-card">
+                <div class="info-item">
+                    <img src="./assets/icons/phone.svg" class="info-icon" alt="Phone"> 
+                    <div>
+                        <span class="info-label">Phone</span>
+                        <div class="info-text">+91 9004263544</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <img src="./assets/icons/mail.svg" class="info-icon" alt="Email">
+                    <div>
+                        <span class="info-label">Email</span>
+                        <div class="info-text">fawazfragrance@gmail.com</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <img src="./assets/icons/home.svg" class="info-icon" alt="Map">
+                    <div>
+                        <span class="info-label">Location</span>
+                        <div class="info-text">Mumbai, Maharashtra, India</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <img src="./assets/icons/clock.svg" class="info-icon" alt="Time">
+                    <div>
+                        <span class="info-label">Business Hours</span>
+                        <div class="info-text">Mon - Sat: 9:00 AM - 8:00 PM</div>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input type="text" id="contactName" class="form-input" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="contactEmail" class="form-input" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea id="contactMessage" class="form-textarea" placeholder="How can we help you?" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn" id="sendBtn">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-wrapper-desktop">
+            <div class="footer-col-1">
+                <div class="footer-logo">
+                    <img src="./assets/logo/footer-logo.png" alt="Fawaz Fragrance Footer">
+                </div>
+                <hr class="footer-divider">
+                <div class="footer-section">
+                    <h3 class="footer-heading">Shop</h3>
+                    <div class="shop-links-grid">
+                        <a href="#" class="footer-link">Classic Collection</a>
+                        <a href="#" class="footer-link">Modern Collection</a>
+                        <a href="#" class="footer-link">Luxury Collection</a>
+                        <a href="#" class="footer-link">Best Sellers</a>
+                    </div>
+                </div>
+                <hr class="footer-divider">
+                <div class="footer-section">
+                    <h3 class="footer-heading">Customer Service</h3>
+                    <div class="contact-grid-footer">
+                        <div class="contact-row"><img src="./assets/icons/phone.svg" class="contact-icon-img" alt="phone"><span class="footer-link">+91 9004263544</span></div>
+                        <div class="contact-row"><img src="./assets/icons/mail.svg" class="contact-icon-img" alt="email"><span class="footer-link">fawazfragrance@gmail.com</span></div>
+                        <div class="contact-row"><img src="./assets/icons/clock.svg" class="contact-icon-img" alt="time"><span class="footer-link">Mon-Fri: 9AM–6PM IST</span></div>
+                        <div class="contact-row"><img src="./assets/icons/whatsapp.svg" class="contact-icon-img" alt="chat"><span class="footer-link">Chat with us on Whatsapp</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-col-2">
+                 <hr class="footer-divider">
+                <div class="bulk-text">For Bulk and Wholesale enquiry please drop an email fawazfragrance@gmail.com</div>
+                 <hr class="footer-divider">
+            </div>
+             <div class="footer-col-3">
+                 <div class="subscribe-box">
+                    <h4>Subscribe to get special offers, exclusive launches, and fragrance tips</h4>
+                    <div class="input-group"><input type="email" placeholder="Email" class="footer-input"><button class="footer-btn">Subscribe</button></div>
+                    <div class="social-icons">
+                        <img src="./assets/icons/instagram.svg" class="social-icon-img" alt="Instagram">
+                        <img src="./assets/icons/facebook.svg" class="social-icon-img" alt="Facebook">
+                        <img src="./assets/icons/pinterest.svg" class="social-icon-img" alt="Pinterest">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="footer-divider">
+        <div class="copyright-text">
+            &copy; 2025 Fawaz Fragrance. All rights reserved.<br>Crafted by Eaz Nexora
+        </div>
+
+        <div class="bottom-nav-pill">
+            <a href="index.html" class="nav-circle-btn">
+                <img src="./assets/icons/home.svg" alt="Home">
+            </a>
+            
+            <a href="collection.html" class="nav-circle-btn">
+                <img src="./assets/icons/perfumes.svg" alt="Collection">
+            </a>
+
+            <a href="cart.html" class="nav-circle-btn">
+                <img src="./assets/icons/gora-cart.svg" alt="Bag">
+                <span class="cart-badge" id="navCartBadge">0</span>
+            </a>
+        </div>
+    </footer>
+
+    <div id="toast">Message Sent!</div>
+
+    <script>
+        // --- 1. HEADER & SEARCH LOGIC ---
+        function toggleMenu() {
+            var menu = document.getElementById("mobileMenu");
+            var btn = document.getElementById("menuBtn");
+            menu.classList.toggle("active");
+            btn.classList.toggle("active");
+        }
+
+        window.addEventListener('scroll', function() {
+            const menu = document.getElementById("mobileMenu");
+            const btn = document.getElementById("menuBtn");
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                btn.classList.remove('active');
+            }
+        });
+
+        function toggleSearch() {
+            var overlay = document.getElementById("searchOverlay");
+            overlay.classList.toggle("active");
+        }
+
+        document.addEventListener('click', function(event) {
+            const overlay = document.getElementById("searchOverlay");
+            const searchBtn = document.getElementById("searchBtn"); 
+            const input = overlay.querySelector('.search-bar-input');
+            const closeBtn = overlay.querySelector('.close-search-btn');
+
+            if (overlay.classList.contains("active")) {
+                if (!input.contains(event.target) && !closeBtn.contains(event.target) && !searchBtn.contains(event.target)) {
+                    overlay.classList.remove("active");
+                }
+            }
+        });
+
+        // Header Scroll Effect
+        let lastScrollTop = 0;
+        const header = document.getElementById("mainHeader");
+        window.addEventListener("scroll", function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop) {
+                header.classList.add("nav-up");
+            } else {
+                header.classList.remove("nav-up");
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
+        });
+
+        // --- 2. BADGE UPDATE LOGIC ---
+        function updateCartBadges() {
+            let cart = JSON.parse(localStorage.getItem('fawazCart')) || [];
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            const badges = document.querySelectorAll('.cart-badge');
+            badges.forEach(badge => {
+                if (totalCount > 0) {
+                    badge.style.display = 'flex';
+                    badge.innerText = totalCount;
+                } else {
+                    badge.style.display = 'none';
+                }
+            });
+        }
+        document.addEventListener('DOMContentLoaded', updateCartBadges);
+
+        // --- 3. TOAST LOGIC ---
+        function showToast(msg) {
+            var x = document.getElementById("toast");
+            x.innerText = msg;
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+
+        // --- 4. EMAILJS LOGIC ---
+        const PUBLIC_KEY = "z2glUWJ25FZ7vdql5"; 
+        const SERVICE_ID = "service_uvvzfip"; 
+        const TEMPLATE_ID = "template_itx2xxd"; 
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('sendBtn');
+            const originalText = btn.innerText;
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            emailjs.init(PUBLIC_KEY);
+
+            const params = {
+                from_name: document.getElementById('contactName').value,
+                customer_email: document.getElementById('contactEmail').value,
+                order_items: document.getElementById('contactMessage').value, 
+                customer_phone: "N/A",
+                payment_status: "General Inquiry",
+                order_total: "N/A",
+                customer_address: "Online Inquiry"
+            };
+
+            emailjs.send(SERVICE_ID, TEMPLATE_ID, params)
+            .then(function() {
+                showToast("Message sent successfully!");
+                document.getElementById('contactForm').reset();
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }, function(error) {
+                showToast("Failed to send.");
+                console.error("EmailJS Error:", error);
+                btn.innerText = originalText;
+                btn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
