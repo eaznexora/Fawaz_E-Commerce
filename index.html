@@ -58,7 +58,7 @@
         header.nav-up { top: -100px; }
 
         .header-left { display: flex; align-items: center; gap: 25px; }
-        .logo-container img { height: 45px; display: block; }
+        .logo-container img { height: 45px; display: block; padding-left: 25px; padding-bottom: 10px;}
         .header-right { display: flex; align-items: center; justify-content: flex-end; }
 
         .header-icon-btn { 
@@ -296,7 +296,7 @@
                 <span class="hamburger-line"></span>
             </button>
             <button class="header-icon-btn" onclick="toggleSearch()" id="searchBtn">
-                <img src="./assets/icons/search-bar.svg" alt="Search" class="icon-img search-icon-header">
+                <img src="./assets/icons/search.svg" alt="Search" class="icon-img search-icon-header">
             </button>
         </div>
 
@@ -394,7 +394,7 @@
                         <div class="product-name">Burberry Weekend</div>
                         <div class="price-container">₹150 <span class="original-price">₹175</span></div>
                     </div>
-                    <button class="add-to-cart-btn" onclick="addToCart('Burberry Weekend', 'Burberry Weekend', 10, './products/Burberry Weekend.png', 'Warm, Sweet & Elegant')">
+                    <button class="add-to-cart-btn" onclick="addToCart('Burberry Weekend', 'Burberry Weekend', 159, './products/Burberry Weekend.png', 'Warm, Sweet & Elegant')">
                         <img src="./assets/icons/gora-cart.svg" alt="Add to Cart">
                     </button>
                 </div>
@@ -515,12 +515,12 @@
 
         <div class="bottom-nav-pill">
             <div class="nav-active-pill">
-              <span>Home</span>
+                <img src="./assets/icons/home.svg" alt="Home">
+              <span>Home</span> 
             </div>
             
             <a href="collection.html" class="nav-circle-btn">
-                <img src="./assets/icons/home-icon-filled.svg" alt="Home">
-            </a>
+                <img src="./assets/icons/perfumes.svg" alt="Home">
 
             <a href="cart.html" class="nav-circle-btn">
                 <img src="./assets/icons/gora-cart.svg" alt="Bag">
@@ -654,4 +654,3 @@
     </script>
 </body>
 </html>
-
