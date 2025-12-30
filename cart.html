@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Fawaz Fragrance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CORE STYLES --- */
+        :root {
+            --bg-cream: #F8F5F0; --text-dark-brown: #3E2B26; --bar-brown: #A68B6C;
+            --box-beige: #F4EFE6; --btn-text: #FFFFFF;
+            --nav-pill-dark: #BCA380; --nav-item-light: #DBCDBA;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-cream); color: var(--text-dark-brown); font-family: 'Cambria', serif; padding-bottom: 100px; }
+
+        /* --- HEADER --- */
+        .cart-header {
+            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+            padding: 20px 25px;
+        }
+        .back-circle-btn {
+            width: 40px; height: 40px; border-radius: 50%; background-color: #A68B6C;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; border: none;
+            color: white; font-size: 20px;
+        }
+        .page-title { font-size: 24px; font-weight: 600; font-family: 'Baskervville', serif; text-align: center; }
+
+        /* --- CART ITEMS --- */
+        .cart-container { padding: 20px 25px; max-width: 600px; margin: 0 auto; }
+        .item-count-label { font-size: 18px; margin-bottom: 20px; font-family: 'Baskervville', serif; }
+
+        .cart-item {
+            display: flex; align-items: center; gap: 15px; margin-bottom: 20px;
+        }
+        
+        .item-img {
+            width: 80px; height: 80px; background-color: #D9D9D9; border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .item-details { flex: 1; }
+        .item-name { font-weight: 700; font-size: 16px; margin-bottom: 4px; font-family: 'Baskervville', serif; }
+        .item-tag { font-size: 12px; color: #888; margin-bottom: 4px; }
+        .item-price { font-weight: 700; font-size: 16px; color: #3E2B26; }
+
+        .qty-controls { display: flex; align-items: center; gap: 10px; }
+        .qty-btn {
+            width: 28px; height: 28px; border-radius: 50%; background-color: #A68B6C;
+            color: white; border: none; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; cursor: pointer;
+        }
+        .qty-number { font-weight: 600; font-size: 16px; min-width: 20px; text-align: center; }
+
+        /* --- ACTION BUTTONS --- */
+        .cart-actions { display: flex; flex-direction: column; gap: 15px; margin-top: 40px; }
+        
+        .btn-outline {
+            width: 100%; padding: 15px; border-radius: 30px; border: 1px solid #A68B6C;
+            background: transparent; color: #A68B6C; font-weight: 600; font-family: 'Baskervville', serif;
+            cursor: pointer; text-align: center; text-decoration: none; display: block;
+        }
+        .btn-filled {
+            width: 100%; padding: 15px; border-radius: 30px; border: none;
+            background: #A68B6C; color: white; font-weight: 600; font-family: 'Baskervville', serif;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(166, 139, 108, 0.3);
+            text-align: center;
+            text-decoration: none;
+        }
+
+        /* --- BOTTOM NAV (Matches your design) --- */
+        .bottom-nav-pill {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background-color: #BCA380; border-radius: 50px; padding: 10px 12px;
+            display: flex; align-items: center; gap: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 2000;
+        }
+        .nav-circle-btn {
+            width: 42px; height: 42px; border-radius: 50%; background-color: #DBCDBA;
+            display: flex; align-items: center; justify-content: center; border: none; cursor: pointer;
+            text-decoration: none;
+        }
+        .nav-circle-btn img { width: 20px; opacity: 0.6; }
+        
+        /* Active State for Cart Page */
+        .nav-active-pill {
+            background-color: #FFFFFF; border-radius: 30px; padding: 8px 20px;
+            display: flex; align-items: center; gap: 8px; height: 42px;
+        }
+        .nav-active-pill span { font-family: 'Cambria', serif; font-size: 16px; color: var(--text-dark-brown); }
+        .nav-active-pill img { width: 18px; }
+
+        /* Empty State */
+        #emptyCartMsg { text-align: center; margin-top: 50px; color: #888; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="cart-header">
+        <button class="back-circle-btn" onclick="history.back()">&#8592;</button>
+        <div class="page-title">Cart</div>
+        <div></div> </div>
+
+    <div class="cart-container">
+        <div class="item-count-label" id="itemCountLabel">Item (0)</div>
+        
+        <div id="cartItemsList"></div>
+
+        <div id="emptyCartMsg">Your cart is empty.</div>
+
+        <div class="cart-actions" id="cartActions">
+            <a class='btn-outline' href='collection.html'>Continue Shopping</a>
+            <a class='btn-filled' href='checkout.html'>Checkout Now</a>
+        </div>
+    </div>
+
+    <div class="bottom-nav-pill">
+        <a class='nav-circle-btn' href='index.html'>
+            <img src="./assets/icons/home.svg" alt="Home">
+        </a>
+        <a class='nav-circle-btn' href='collection.html'>
+             <img src="./assets/icons/perfumes.svg" alt="Bag">
+        </a>
+        <div class="nav-active-pill">
+            <img src="./assets/icons/kallu-cart.svg" alt="Cart">
+            <span>Cart</span>
+        </div>
+    </div>
+
+    <script>
+        // Helper to format numbers back to currency string
+        function formatCurrency(amount) {
+            return "Rs. " + amount;
+        }
+
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem('fawazCart')) || [];
+            const list = document.getElementById('cartItemsList');
+            const countLabel = document.getElementById('itemCountLabel');
+            const emptyMsg = document.getElementById('emptyCartMsg');
+            const actions = document.getElementById('cartActions');
+
+            list.innerHTML = '';
+
+            // --- FIX 2: Calculate Total Item Count (Sum of Quantities) ---
+            const totalItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            countLabel.innerText = `Item (${totalItemCount})`;
+
+            if (cart.length === 0) {
+                emptyMsg.style.display = 'block';
+                actions.style.display = 'none';
+                return;
+            } else {
+                emptyMsg.style.display = 'none';
+                actions.style.display = 'flex';
+            }
+
+            cart.forEach((product, index) => {
+                // --- FIX 3: Calculate Price Totals ---
+                // Ensure price is a number, then multiply by quantity
+                const unitPrice = Number(product.price);
+                const rowTotal = unitPrice * product.quantity;
+                const displayPrice = formatCurrency(rowTotal);
+
+                const row = document.createElement('div');
+                row.classList.add('cart-item');
+                row.innerHTML = `
+                    <img src="${product.img}" alt="${product.name}" class="item-img">
+                    <div class="item-details">
+                        <div class="item-name">${product.name}</div>
+                        <div class="item-tag">${product.tagline || 'Fragrance'}</div>
+                        <div class="item-price">${displayPrice}</div> </div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+                        <span class="qty-number">${product.quantity}</span>
+                        <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+                    </div>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function updateQty(index, change) {
+            let cart = JSON.parse(localStorage.getItem('fawazCart')) || [];
+            
+            cart[index].quantity += change;
+
+            // Remove item if quantity goes to 0
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+
+            localStorage.setItem('fawazCart', JSON.stringify(cart));
+            loadCart(); // Refresh UI
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadCart);
+    </script>
+</body>
+</html>
