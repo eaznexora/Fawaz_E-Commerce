@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | Fawaz Fragrance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F8F5F0; color: #3E2B26; font-family: 'Cambria', serif;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 100vh; margin: 0; text-align: center; padding: 20px;
+        }
+        .success-card {
+            background: white; padding: 40px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 500px; width: 100%;
+        }
+        /* Animation for Checkmark */
+        .checkmark-circle {
+            width: 80px; height: 80px; background: #27ae60; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px auto; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .checkmark {
+            width: 40px; height: 20px; border-bottom: 4px solid white; border-left: 4px solid white;
+            transform: rotate(-45deg); margin-top: -5px;
+        }
+        @keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+
+        h1 { font-family: 'Baskervville', serif; font-size: 32px; margin-bottom: 10px; color: #3E2B26; }
+        p { color: #666; line-height: 1.5; margin-bottom: 30px; font-size: 16px; }
+        
+        .order-id { 
+            background: #F4EFE6; padding: 10px 20px; border-radius: 50px; 
+            display: inline-block; font-weight: bold; color: #A68B6C; margin-bottom: 20px; 
+        }
+
+        .btn-home {
+            background-color: #A68B6C; color: white; padding: 15px 40px; 
+            border-radius: 30px; text-decoration: none; font-weight: bold; 
+            display: inline-block; transition: 0.3s;
+        }
+        .btn-home:hover { background-color: #8f7658; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <div class="success-card">
+        <div class="checkmark-circle"><div class="checkmark"></div></div>
+        <h1>Order Placed!</h1>
+        <div class="order-id" id="orderIdDisplay">Order #...</div>
+        <p>
+            Thank you for shopping with Fawaz Fragrance. <br>
+            We have received your order details on WhatsApp. <br>
+            We will verify your payment and ship your package shortly.
+        </p>
+        <a href="index.html" class="btn-home">Continue Shopping</a>
+    </div>
+
+    <script>
+        // Generate a random Order ID for looks
+        const orderId = "FAW-" + Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('orderIdDisplay').innerText = "Order " + orderId;
+        
+        // Optional: Clear Cart
+        localStorage.removeItem('fawazCart');
+    </script>
+
+</body>
+</html>
