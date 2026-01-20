@@ -65,33 +65,10 @@
         .action-buttons { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
         .btn-outline { width: 100%; padding: 15px; border-radius: 30px; border: 1px solid #A68B6C; background: transparent; color: #A68B6C; font-weight: 600; font-family: 'Baskervville', serif; cursor: pointer; text-align: center; text-decoration: none; display: block; font-size: 16px; }
         .btn-filled { width: 100%; padding: 15px; border-radius: 30px; border: none; background: #A68B6C; color: white; font-weight: 600; font-family: 'Baskervville', serif; cursor: pointer; box-shadow: 0 4px 10px rgba(166, 139, 108, 0.3); font-size: 16px; }
-        .btn-upi { width: 100%; padding: 15px; border-radius: 30px; border: none; background: #5f259f; color: white; font-weight: 600; font-family: 'Baskervville', serif; cursor: pointer; box-shadow: 0 4px 10px rgba(95, 37, 159, 0.3); font-size: 16px; display: none; }
+        /* Changed to green for online payment */
+        .btn-upi { width: 100%; padding: 15px; border-radius: 30px; border: none; background: #25D366; color: white; font-weight: 600; font-family: 'Baskervville', serif; cursor: pointer; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); font-size: 16px; display: none; }
 
         #emptyCartMsg { text-align: center; margin-top: 50px; color: #888; display: none; }
-
-        /* --- CUSTOM MODAL STYLES --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); z-index: 2000;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden; transition: all 0.3s ease;
-        }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        
-        .modal-card {
-            background-color: var(--bg-cream); width: 85%; max-width: 350px;
-            border-radius: 20px; padding: 25px; text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: scale(0.8); transition: transform 0.3s ease;
-        }
-        .modal-overlay.active .modal-card { transform: scale(1); }
-
-        .modal-icon { width: 50px; height: 50px; margin-bottom: 15px; }
-        .modal-title { font-family: 'Baskervville', serif; font-size: 22px; margin-bottom: 10px; color: var(--text-dark-brown); }
-        .modal-text { font-size: 14px; color: #666; margin-bottom: 25px; line-height: 1.5; }
-        
-        .modal-actions { display: flex; flex-direction: column; gap: 10px; }
-        .btn-confirm { background-color: #27ae60; color: white; padding: 12px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; }
-        .btn-cancel { background-color: transparent; border: 1px solid #999; color: #666; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -133,22 +110,14 @@
 
             <div class="action-buttons">
                 <button id="mainActionBtn" class="btn-filled" onclick="handleMainAction()">Add Address</button>
-                <button id="upiActionBtn" class="btn-upi" onclick="handleUPIPayment()">Pay via PhonePe/UPI</button>
+                
+                <button id="upiActionBtn" class="btn-upi" onclick="handleUPIPayment()">Proceed to Pay</button>
+                
                 <button class="btn-outline" onclick="window.location.href='cart.html'">Cancel Order</button>
             </div>
         </div>
     </div>
 
-    <div class="modal-overlay" id="paymentModal">
-        <div class="modal-card">
-            <div class="modal-title">Confirm Payment</div>
-            <div class="modal-text">Did you complete the payment successfully in your UPI App?</div>
-            <div class="modal-actions">
-                <button class="btn-confirm" onclick="confirmPayment(true)">Yes, Payment Done</button>
-                <button class="btn-cancel" onclick="confirmPayment(false)">No, Not Yet</button>
-            </div>
-        </div>
-    </div>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
@@ -165,7 +134,7 @@
     const EMAILJS_TEMPLATE_ID = "template_geswgur";
 
     // Pricing Rules
-    const SHIPPING_COST = 75;
+    const SHIPPING_COST = 0;
     const FREE_SHIPPING_THRESHOLD = 599;
     const DISCOUNT_PERCENTAGE = 0.125; // 12.5%
 
@@ -185,7 +154,7 @@
     }
 
     // ==========================================
-    // 3. CART LOGIC (Fixes the "0 Items" bug)
+    // 3. CART LOGIC
     // ==========================================
     function loadCheckout() {
         let cart = JSON.parse(localStorage.getItem('fawazCart')) || [];
@@ -279,7 +248,7 @@
     }
 
     // ==========================================
-    // 4. ADDRESS LOGIC
+    // 4. ADDRESS LOGIC (UPDATED: NO COD)
     // ==========================================
     function checkAddress() {
         const storedAddr = localStorage.getItem('fawazAddress');
@@ -289,35 +258,39 @@
 
         if (storedAddr) {
             savedAddress = JSON.parse(storedAddr);
+            
+            // Show Address Details
             addrCard.style.display = 'block';
             document.getElementById('dispName').innerText = savedAddress.name;
             document.getElementById('dispAddr').innerText = `${savedAddress.line1}, ${savedAddress.line2}, ${savedAddress.city} - ${savedAddress.pincode}`;
             document.getElementById('dispPhone').innerText = `Phone: ${savedAddress.phone}`;
 
-            // Show both buttons
-            mainBtn.innerText = "Place Order (COD)";
-            mainBtn.style.backgroundColor = "#25D366"; 
+            // HIDE the Main Button (which used to be COD)
+            mainBtn.style.display = "none"; 
             
+            // SHOW ONLY the Online Payment Button
             upiBtn.style.display = "block";
-            upiBtn.innerText = "Pay Online (Razorpay)"; 
         } else {
+            // No Address? Hide Address Card
             addrCard.style.display = 'none';
+            
+            // SHOW "Add Address" Button
+            mainBtn.style.display = "block";
             mainBtn.innerText = "Add Address";
             mainBtn.style.backgroundColor = "#A68B6C"; 
+            
+            // HIDE Payment Button (Cant pay without address)
             upiBtn.style.display = "none";
         }
     }
 
+    // This function now ONLY redirects to add address. It does NOT place orders.
     function handleMainAction() {
-        if (savedAddress) {
-            placeOrderEmail("COD");
-        } else {
-            window.location.href = 'address.html';
-        }
+        window.location.href = 'address.html';
     }
 
     // ==========================================
-    // 5. PAYMENT LOGIC (The New Part)
+    // 5. PAYMENT LOGIC
     // ==========================================
     async function handleUPIPayment() {
         if (!savedAddress) { alert("Please add an address first."); return; }
@@ -349,7 +322,7 @@
                 "order_id": orderData.id, 
                 "handler": function (response){
                     // Step C: Payment Success -> Send Email
-                    alert("Payment Successful! ID: " + response.razorpay_payment_id);
+                    alert("Payment Successful!");
                     placeOrderEmail("PAID via Razorpay (ID: " + response.razorpay_payment_id + ")");
                 },
                 "prefill": {
@@ -357,7 +330,7 @@
                     "email": savedAddress.email,
                     "contact": savedAddress.phone
                 },
-                "theme": { "color": "#3399cc" },
+                "theme": { "color": "#25D366" }, // Changed to Green
                 "modal": {
                     "ondismiss": function(){
                         payBtn.innerText = originalText;
@@ -371,14 +344,14 @@
 
         } catch (error) {
             console.error(error);
-            alert("Connection Error. Make sure 'node server.js' is running!");
+            alert("Connection Error. Please try again.");
             payBtn.innerText = originalText;
             payBtn.disabled = false;
         }
     }
 
     // ==========================================
-    // 6. EMAIL & SUCCESS LOGIC
+    // 6. EMAIL LOGIC
     // ==========================================
     function placeOrderEmail(paymentStatus) {
         emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -397,27 +370,18 @@
             payment_status: paymentStatus
         };
 
-        const btn = document.getElementById('mainActionBtn');
         const upiBtn = document.getElementById('upiActionBtn');
-        
-        btn.disabled = true;
         upiBtn.disabled = true;
 
         emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
             .then(function(response) {
-                // Clear cart and redirect
                 localStorage.removeItem('fawazCart'); 
                 window.location.href = 'success.html';
             }, function(error) {
-                alert("Payment received, but email failed. Please take a screenshot!");
+                alert("Payment received, but email failed. Screenshot this page!");
                 window.location.href = 'success.html';
             });
     }
 </script>
 </body>
 </html>
-
-
-
-
-
