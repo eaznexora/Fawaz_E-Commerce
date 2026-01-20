@@ -149,199 +149,271 @@
             </div>
         </div>
     </div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-    <script>
-        const SHIPPING_COST = 75 ;
-        const FREE_SHIPPING_THRESHOLD = 599;
-        const DISCOUNT_PERCENTAGE = 0.125; 
+<script>
+    // ==========================================
+    // 1. CONFIGURATION & KEYS
+    // ==========================================
+    const BACKEND_URL = "https://fawaz-backend.onrender.com/create-order"; 
+    
+    // ⚠️ REPLACE THIS WITH YOUR ACTUAL KEY ID (rzp_live_...)
+    const RAZORPAY_KEY_ID = "rzp_live_S6BJxS1Xoc7dJe"; 
+
+    const EMAILJS_PUBLIC_KEY = "gKYXDCMnzsPOzNW5f";
+    const EMAILJS_SERVICE_ID = "service_gyv2q24";
+    const EMAILJS_TEMPLATE_ID = "template_geswgur";
+
+    // Pricing Rules
+    const SHIPPING_COST = 0;
+    const FREE_SHIPPING_THRESHOLD = 599;
+    const DISCOUNT_PERCENTAGE = 0.125; // 12.5%
+
+    // Global Variables
+    let savedAddress = null;
+    let currentTotalValue = 0;
+
+    // ==========================================
+    // 2. INITIALIZATION
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+        loadCheckout(); // Load the cart items immediately
+    });
+
+    function formatCurrency(amount) { 
+        return "₹" + amount.toFixed(2); 
+    }
+
+    // ==========================================
+    // 3. CART LOGIC (Fixes the "0 Items" bug)
+    // ==========================================
+    function loadCheckout() {
+        let cart = JSON.parse(localStorage.getItem('fawazCart')) || [];
+        const list = document.getElementById('checkoutItemsList');
+        const breakdownList = document.getElementById('priceBreakdownList');
+        const countLabel = document.getElementById('itemCountLabel');
+        const emptyMsg = document.getElementById('emptyCartMsg');
+        const pricingSection = document.getElementById('pricingSection');
         
-        // --- YOUR KEYS ---
-        const EMAILJS_PUBLIC_KEY = "gKYXDCMnzsPOzNW5f";  
-        const EMAILJS_SERVICE_ID = "service_gyv2q24";  
-        const EMAILJS_TEMPLATE_ID = "template_geswgur"; 
-        const MERCHANT_UPI_ID = "mtqansari19@okhdfcbank"; 
-        const MERCHANT_NAME = "FawazFragrance";
+        const deliveryFeeEl = document.getElementById('deliveryFee');
+        const grandTotalEl = document.getElementById('grandTotal');
+        const discountNoteEl = document.getElementById('discountNote');
 
-        let savedAddress = null;
-        let currentTotalValue = 0;
+        // Clear previous lists
+        list.innerHTML = '';
+        breakdownList.innerHTML = '';
 
-        function formatCurrency(amount) { return "₹" + amount.toFixed(2); }
+        // Update Item Count
+        const totalItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        countLabel.innerText = `Item (${totalItemCount})`;
 
-        function loadCheckout() {
-            let cart = JSON.parse(localStorage.getItem('fawazCart')) || [];
-            const list = document.getElementById('checkoutItemsList');
-            const breakdownList = document.getElementById('priceBreakdownList');
-            const countLabel = document.getElementById('itemCountLabel');
-            const emptyMsg = document.getElementById('emptyCartMsg');
-            const pricingSection = document.getElementById('pricingSection');
+        // Handle Empty Cart
+        if (cart.length === 0) {
+            emptyMsg.style.display = 'block';
+            pricingSection.style.display = 'none';
+            return;
+        } else {
+            emptyMsg.style.display = 'none';
+            pricingSection.style.display = 'block';
+        }
+
+        let subTotal = 0;
+
+        // Render Items
+        cart.forEach((product, index) => {
+            const row = document.createElement('div');
+            row.classList.add('checkout-item');
+            row.innerHTML = `
+                <img src="${product.img}" alt="${product.name}" class="item-img">
+                <div class="item-details">
+                    <div class="item-name">${product.name}</div>
+                    <div class="item-tag">${product.tagline || 'Fragrance'}</div>
+                    <div class="item-price">₹${product.price}</div>
+                </div>
+                <div class="qty-controls">
+                    <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+                    <span class="qty-number">${product.quantity}</span>
+                    <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+                </div>
+            `;
+            list.appendChild(row);
+
+            const itemTotal = product.price * product.quantity;
+            subTotal += itemTotal;
+
+            // Add to Price Breakdown
+            const breakdownRow = document.createElement('div');
+            breakdownRow.classList.add('breakdown-row');
+            breakdownRow.innerHTML = `<span class="breakdown-name">${product.name} (x${product.quantity})</span><span>₹${itemTotal}</span>`;
+            breakdownList.appendChild(breakdownRow);
+        });
+
+        // Calculate Totals
+        let finalShipping = (subTotal > FREE_SHIPPING_THRESHOLD) ? 0 : SHIPPING_COST;
+        
+        if (finalShipping === 0) {
+            deliveryFeeEl.innerText = "Free";
+            deliveryFeeEl.style.color = "#27ae60";
+        } else {
+            deliveryFeeEl.innerText = "₹" + SHIPPING_COST;
+            deliveryFeeEl.style.color = "#666";
+        }
+
+        const discountAmount = subTotal * DISCOUNT_PERCENTAGE;
+        const discountedSubTotal = subTotal - discountAmount;
+        
+        currentTotalValue = discountedSubTotal + finalShipping;
+
+        grandTotalEl.innerText = formatCurrency(currentTotalValue);
+        discountNoteEl.innerText = `(Includes ${formatCurrency(discountAmount)} Discount @ 12.5%)`;
+        
+        checkAddress();
+    }
+
+    function updateQty(index, change) {
+        let cart = JSON.parse(localStorage.getItem('fawazCart')) || [];
+        cart[index].quantity += change;
+        if (cart[index].quantity <= 0) cart.splice(index, 1);
+        localStorage.setItem('fawazCart', JSON.stringify(cart));
+        loadCheckout(); // Reload to show changes
+    }
+
+    // ==========================================
+    // 4. ADDRESS LOGIC
+    // ==========================================
+    function checkAddress() {
+        const storedAddr = localStorage.getItem('fawazAddress');
+        const mainBtn = document.getElementById('mainActionBtn');
+        const upiBtn = document.getElementById('upiActionBtn');
+        const addrCard = document.getElementById('savedAddressCard');
+
+        if (storedAddr) {
+            savedAddress = JSON.parse(storedAddr);
+            addrCard.style.display = 'block';
+            document.getElementById('dispName').innerText = savedAddress.name;
+            document.getElementById('dispAddr').innerText = `${savedAddress.line1}, ${savedAddress.line2}, ${savedAddress.city} - ${savedAddress.pincode}`;
+            document.getElementById('dispPhone').innerText = `Phone: ${savedAddress.phone}`;
+
+            // Show both buttons
+            mainBtn.innerText = "Place Order (COD)";
+            mainBtn.style.backgroundColor = "#25D366"; 
             
-            const deliveryFeeEl = document.getElementById('deliveryFee');
-            const grandTotalEl = document.getElementById('grandTotal');
-            const discountNoteEl = document.getElementById('discountNote');
+            upiBtn.style.display = "block";
+            upiBtn.innerText = "Pay Online (Razorpay)"; 
+        } else {
+            addrCard.style.display = 'none';
+            mainBtn.innerText = "Add Address";
+            mainBtn.style.backgroundColor = "#A68B6C"; 
+            upiBtn.style.display = "none";
+        }
+    }
 
-            list.innerHTML = '';
-            breakdownList.innerHTML = '';
+    function handleMainAction() {
+        if (savedAddress) {
+            placeOrderEmail("COD");
+        } else {
+            window.location.href = 'address.html';
+        }
+    }
 
-            const totalItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            countLabel.innerText = `Item (${totalItemCount})`;
+    // ==========================================
+    // 5. PAYMENT LOGIC (The New Part)
+    // ==========================================
+    async function handleUPIPayment() {
+        if (!savedAddress) { alert("Please add an address first."); return; }
+        
+        const payBtn = document.getElementById('upiActionBtn');
+        const originalText = payBtn.innerText;
+        payBtn.innerText = "Processing...";
+        payBtn.disabled = true;
 
-            if (cart.length === 0) {
-                emptyMsg.style.display = 'block';
-                pricingSection.style.display = 'none';
-                return;
-            } else {
-                emptyMsg.style.display = 'none';
-                pricingSection.style.display = 'block';
-            }
-
-            let subTotal = 0;
-
-            cart.forEach((product, index) => {
-                const row = document.createElement('div');
-                row.classList.add('checkout-item');
-                row.innerHTML = `
-                    <img src="${product.img}" alt="${product.name}" class="item-img">
-                    <div class="item-details">
-                        <div class="item-name">${product.name}</div>
-                        <div class="item-tag">${product.tagline || 'Fragrance'}</div>
-                        <div class="item-price">₹${product.price}</div>
-                    </div>
-                    <div class="qty-controls">
-                        <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
-                        <span class="qty-number">${product.quantity}</span>
-                        <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
-                    </div>
-                `;
-                list.appendChild(row);
-
-                const itemTotal = product.price * product.quantity;
-                subTotal += itemTotal;
-
-                const breakdownRow = document.createElement('div');
-                breakdownRow.classList.add('breakdown-row');
-                breakdownRow.innerHTML = `<span class="breakdown-name">${product.name} (x${product.quantity})</span><span>₹${itemTotal}</span>`;
-                breakdownList.appendChild(breakdownRow);
+        try {
+            // Step A: Create Order on Backend
+            const response = await fetch(BACKEND_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: currentTotalValue }) 
             });
 
-            let finalShipping = (subTotal > FREE_SHIPPING_THRESHOLD) ? 0 : SHIPPING_COST;
-            const deliveryFeeElVal = document.getElementById('deliveryFee');
-            if (finalShipping === 0) {
-                deliveryFeeElVal.innerText = "Free";
-                deliveryFeeElVal.style.color = "#27ae60";
-            } else {
-                deliveryFeeElVal.innerText = "₹" + SHIPPING_COST;
-                deliveryFeeElVal.style.color = "#666";
-            }
+            if (!response.ok) throw new Error("Backend connection failed");
 
-            const discountAmount = subTotal * DISCOUNT_PERCENTAGE;
-            const discountedSubTotal = subTotal - discountAmount;
-            
-            currentTotalValue = discountedSubTotal + finalShipping;
+            const orderData = await response.json();
 
-            grandTotalEl.innerText = formatCurrency(currentTotalValue);
-            discountNoteEl.innerText = `(Includes ${formatCurrency(discountAmount)} Discount @ 12.5%)`;
-            
-            checkAddress();
-        }
-
-        function updateQty(index, change) {
-            let cart = JSON.parse(localStorage.getItem('fawazCart')) || [];
-            cart[index].quantity += change;
-            if (cart[index].quantity <= 0) cart.splice(index, 1);
-            localStorage.setItem('fawazCart', JSON.stringify(cart));
-            loadCheckout();
-        }
-
-        function checkAddress() {
-            const storedAddr = localStorage.getItem('fawazAddress');
-            const mainBtn = document.getElementById('mainActionBtn');
-            const upiBtn = document.getElementById('upiActionBtn');
-            const addrCard = document.getElementById('savedAddressCard');
-
-            if (storedAddr) {
-                savedAddress = JSON.parse(storedAddr);
-                addrCard.style.display = 'block';
-                document.getElementById('dispName').innerText = savedAddress.name;
-                document.getElementById('dispAddr').innerText = `${savedAddress.line1}, ${savedAddress.line2}, ${savedAddress.city} - ${savedAddress.pincode}`;
-                document.getElementById('dispPhone').innerText = `Phone: ${savedAddress.phone}`;
-
-                mainBtn.innerText = "Place Order (COD)";
-                mainBtn.style.backgroundColor = "#25D366"; 
-                upiBtn.style.display = "block";
-            } else {
-                addrCard.style.display = 'none';
-                mainBtn.innerText = "Add Address";
-                mainBtn.style.backgroundColor = "#A68B6C"; 
-                upiBtn.style.display = "none";
-            }
-        }
-
-        function handleMainAction() {
-            if (savedAddress) {
-                placeOrderEmail("COD");
-            } else {
-                window.location.href = 'address.html';
-            }
-        }
-
-        // --- CUSTOM MODAL LOGIC ---
-        function handleUPIPayment() {
-            if (!savedAddress) { alert("Please add an address first."); return; }
-            
-            // 1. Open UPI App
-            const upiLink = `upi://pay?pa=${MERCHANT_UPI_ID}&pn=${MERCHANT_NAME}&am=${currentTotalValue.toFixed(2)}&cu=INR`;
-            window.location.href = upiLink;
-            
-            // 2. Wait 3 seconds, then show the Styled Modal
-            setTimeout(() => {
-                document.getElementById('paymentModal').classList.add('active');
-            }, 3000);
-        }
-
-        function confirmPayment(isSuccess) {
-            // Hide Modal
-            document.getElementById('paymentModal').classList.remove('active');
-            
-            if (isSuccess) {
-                // If user clicked YES, send order email
-                placeOrderEmail("PAID via UPI");
-            }
-        }
-
-        function placeOrderEmail(paymentStatus) {
-            emailjs.init(EMAILJS_PUBLIC_KEY);
-
-            let cart = JSON.parse(localStorage.getItem('fawazCart')) || [];
-            let itemListString = "";
-            cart.forEach(item => { itemListString += `${item.name} (x${item.quantity}) - ₹${item.price * item.quantity}\n`; });
-
-            const templateParams = {
-                from_name: savedAddress.name,
-                customer_email: savedAddress.email,
-                customer_phone: savedAddress.phone,
-                customer_address: `${savedAddress.line1}, ${savedAddress.line2}, ${savedAddress.city} - ${savedAddress.pincode}`,
-                order_items: itemListString,
-                order_total: document.getElementById('grandTotal').innerText,
-                payment_status: paymentStatus
+            // Step B: Open Razorpay
+            var options = {
+                "key": RAZORPAY_KEY_ID, 
+                "amount": orderData.amount, 
+                "currency": "INR",
+                "name": "Fawaz Fragrance",
+                "description": "Order Payment",
+                "order_id": orderData.id, 
+                "handler": function (response){
+                    // Step C: Payment Success -> Send Email
+                    alert("Payment Successful! ID: " + response.razorpay_payment_id);
+                    placeOrderEmail("PAID via Razorpay (ID: " + response.razorpay_payment_id + ")");
+                },
+                "prefill": {
+                    "name": savedAddress.name,
+                    "email": savedAddress.email,
+                    "contact": savedAddress.phone
+                },
+                "theme": { "color": "#3399cc" },
+                "modal": {
+                    "ondismiss": function(){
+                        payBtn.innerText = originalText;
+                        payBtn.disabled = false;
+                    }
+                }
             };
 
-            const btn = document.getElementById('mainActionBtn');
-            const originalText = btn.innerText;
-            btn.innerText = "Processing...";
-            btn.disabled = true;
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
 
-            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-                .then(function(response) {
-                    window.location.href = 'success.html';
-                }, function(error) {
-                    alert("Order failed to send. Error: " + JSON.stringify(error));
-                    btn.innerText = originalText;
-                    btn.disabled = false;
-                });
+        } catch (error) {
+            console.error(error);
+            alert("Connection Error. Make sure 'node server.js' is running!");
+            payBtn.innerText = originalText;
+            payBtn.disabled = false;
         }
+    }
 
-        document.addEventListener('DOMContentLoaded', loadCheckout);
-    </script>
+    // ==========================================
+    // 6. EMAIL & SUCCESS LOGIC
+    // ==========================================
+    function placeOrderEmail(paymentStatus) {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+
+        let cart = JSON.parse(localStorage.getItem('fawazCart')) || [];
+        let itemListString = "";
+        cart.forEach(item => { itemListString += `${item.name} (x${item.quantity}) - ₹${item.price * item.quantity}\n`; });
+
+        const templateParams = {
+            from_name: savedAddress.name,
+            customer_email: savedAddress.email,
+            customer_phone: savedAddress.phone,
+            customer_address: `${savedAddress.line1}, ${savedAddress.line2}, ${savedAddress.city} - ${savedAddress.pincode}`,
+            order_items: itemListString,
+            order_total: document.getElementById('grandTotal').innerText,
+            payment_status: paymentStatus
+        };
+
+        const btn = document.getElementById('mainActionBtn');
+        const upiBtn = document.getElementById('upiActionBtn');
+        
+        btn.disabled = true;
+        upiBtn.disabled = true;
+
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+            .then(function(response) {
+                // Clear cart and redirect
+                localStorage.removeItem('fawazCart'); 
+                window.location.href = 'success.html';
+            }, function(error) {
+                alert("Payment received, but email failed. Please take a screenshot!");
+                window.location.href = 'success.html';
+            });
+    }
+</script>
 </body>
 </html>
 
