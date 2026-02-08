@@ -313,6 +313,9 @@
     // ==========================================
     // 5. PAYMENT LOGIC
     // ==========================================
+    // ==========================================
+    // 5. PAYMENT LOGIC (FIXED)
+    // ==========================================
     async function handleUPIPayment() {
         if (!savedAddress) { alert("Please add an address first."); return; }
         
@@ -322,14 +325,23 @@
         payBtn.disabled = true;
 
         try {
+            // FIX: Ensure the amount is a clean number (no long decimals)
+            // We use Math.round to make it a clean integer if possible, 
+            // or at least standard 2-decimal format for the backend to handle.
+            const cleanAmount = Number(currentTotalValue.toFixed(2));
+
             // Step A: Create Order on Backend
             const response = await fetch(BACKEND_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount: currentTotalValue }) 
+                body: JSON.stringify({ amount: cleanAmount }) 
             });
 
-            if (!response.ok) throw new Error("Backend connection failed");
+            if (!response.ok) {
+                // Determine if it is a server error
+                const errorText = await response.text(); 
+                throw new Error("Server Error: " + response.status + " " + errorText);
+            }
 
             const orderData = await response.json();
 
@@ -343,7 +355,7 @@
                 "order_id": orderData.id, 
                 "handler": function (response){
                     // Step C: Payment Success -> Send Email
-                    alert("Payment Successful!");
+                    // alert("Payment Successful!"); // Optional: Remove alert for smoother flow
                     placeOrderEmail("PAID via Razorpay (ID: " + response.razorpay_payment_id + ")");
                 },
                 "prefill": {
@@ -351,7 +363,7 @@
                     "email": savedAddress.email,
                     "contact": savedAddress.phone
                 },
-                "theme": { "color": "#25D366" }, // Changed to Green
+                "theme": { "color": "#25D366" },
                 "modal": {
                     "ondismiss": function(){
                         payBtn.innerText = originalText;
@@ -364,13 +376,13 @@
             rzp1.open();
 
         } catch (error) {
-            console.error(error);
-            alert("Connection Error. Please try again.");
+            console.error("Payment Error Details:", error);
+            alert("Payment initialization failed. Server responded with: " + error.message);
             payBtn.innerText = originalText;
             payBtn.disabled = false;
         }
     }
-
+    
     // ==========================================
     // 6. EMAIL LOGIC
     // ==========================================
